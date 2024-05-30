@@ -15,6 +15,10 @@ public class RolDAO implements RolRepository {
     PreparedStatement ps;
     ResultSet rs;
 
+    public RolDAO() {
+        con = new Conexion();
+    }
+
     @Override
     public void crear(Rol entidad) {
         try {

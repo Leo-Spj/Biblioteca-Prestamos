@@ -15,6 +15,10 @@ public class UsuarioDAO implements UsuarioRepository {
     PreparedStatement ps;
     ResultSet rs;
 
+    public UsuarioDAO() {
+        con = new Conexion();
+    }
+
     @Override
     public void crear(Usuario entidad) {
         try {

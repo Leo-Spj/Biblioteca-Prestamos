@@ -15,6 +15,10 @@ public class LibroDAO implements LibroRepository {
     PreparedStatement ps;
     ResultSet rs;
 
+    public LibroDAO() {
+        con = new Conexion();
+    }
+
     @Override
     public void crear(Libro entidad) {
         try {

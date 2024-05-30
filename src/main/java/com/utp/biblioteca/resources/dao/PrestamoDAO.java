@@ -15,6 +15,10 @@ public class PrestamoDAO implements PrestamoRepository {
     PreparedStatement ps;
     ResultSet rs;
 
+    public PrestamoDAO() {
+        con = new Conexion();
+    }
+
     @Override
     public void crear(Prestamo entidad) {
         try {
