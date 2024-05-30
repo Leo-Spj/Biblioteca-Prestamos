@@ -1,4 +1,5 @@
 *.properties
+.idea/dataSources.xml
 
 # Created by https://www.toptal.com/developers/gitignore/api/java,intellij,netbeans,maven
 # Edit at https://www.toptal.com/developers/gitignore?templates=java,intellij,netbeans,maven
