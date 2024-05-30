@@ -47,4 +47,15 @@ public class Usuario {
     public void setRol_id(int rol_id) {
         this.rol_id = rol_id;
     }
+
+    @Override
+    public String toString() {
+        return "Usuario{" +
+                "usuario_id=" + usuario_id +
+                ", nombre='" + nombre + '\'' +
+                ", correo='" + correo + '\'' +
+                ", contraseña='" + contraseña + '\'' +
+                ", rol_id=" + rol_id +
+                '}';
+    }
 }

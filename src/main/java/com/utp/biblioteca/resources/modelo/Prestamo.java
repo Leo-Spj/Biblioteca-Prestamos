@@ -58,4 +58,16 @@ public class Prestamo {
     public void setDevuelto(boolean devuelto) {
         this.devuelto = devuelto;
     }
+
+    @Override
+    public String toString() {
+        return "Prestamo{" +
+                "prestamo_id=" + prestamo_id +
+                ", usuario_id=" + usuario_id +
+                ", libro_id=" + libro_id +
+                ", fecha_prestamo=" + fecha_prestamo +
+                ", fecha_devolucion=" + fecha_devolucion +
+                ", devuelto=" + devuelto +
+                '}';
+    }
 }
