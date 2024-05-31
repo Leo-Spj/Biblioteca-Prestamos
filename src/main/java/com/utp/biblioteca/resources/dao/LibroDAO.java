@@ -23,10 +23,12 @@ public class LibroDAO implements LibroRepository {
     public void crear(Libro entidad) {
         try {
             conn = con.getConectar();
-            ps = conn.prepareStatement("INSERT INTO Libro (titulo, autor, isbn, estok, disponible) VALUES (?, ?, ?, ?, ?)");
+            ps = conn.prepareStatement("INSERT INTO Libro (titulo, autor, isbn, link_imagen, descripcion, estok, disponible) VALUES (?, ?, ?, ?, ?, ?, ?)");
             ps.setString(1, entidad.getTitulo());
             ps.setString(2, entidad.getAutor());
             ps.setString(3, entidad.getIsbn());
+            ps.setString(4, entidad.getLink_imagen());
+            ps.setString(5, entidad.getDescripcion());
             ps.setInt(4, entidad.getEstok());
             ps.setBoolean(5, entidad.isDisponible());
             ps.executeUpdate();
@@ -48,6 +50,8 @@ public class LibroDAO implements LibroRepository {
                 libro.setTitulo(rs.getString("titulo"));
                 libro.setAutor(rs.getString("autor"));
                 libro.setIsbn(rs.getString("isbn"));
+                libro.setLink_imagen(rs.getString("link_imagen"));
+                libro.setDescripcion(rs.getString("descripcion"));
                 libro.setEstok(rs.getInt("estok"));
                 libro.setDisponible(rs.getBoolean("disponible"));
                 libros.add(libro);
@@ -71,6 +75,8 @@ public class LibroDAO implements LibroRepository {
                 libro.setTitulo(rs.getString("titulo"));
                 libro.setAutor(rs.getString("autor"));
                 libro.setIsbn(rs.getString("isbn"));
+                libro.setLink_imagen(rs.getString("link_imagen"));
+                libro.setDescripcion(rs.getString("descripcion"));
                 libro.setEstok(rs.getInt("estok"));
                 libro.setDisponible(rs.getBoolean("disponible"));
             }
@@ -84,10 +90,12 @@ public class LibroDAO implements LibroRepository {
     public void actualizar(Libro entidad) {
         try {
             conn = con.getConectar();
-            ps = conn.prepareStatement("UPDATE Libro SET titulo = ?, autor = ?, isbn = ?, estok = ?, disponible = ? WHERE libro_id = ?");
+            ps = conn.prepareStatement("UPDATE Libro SET titulo = ?, autor = ?, isbn = ?, link_imagen = ?, descripcion = ?, estok = ?, disponible = ? WHERE libro_id = ?");
             ps.setString(1, entidad.getTitulo());
             ps.setString(2, entidad.getAutor());
             ps.setString(3, entidad.getIsbn());
+            ps.setString(4, entidad.getLink_imagen());
+            ps.setString(5, entidad.getDescripcion());
             ps.setInt(4, entidad.getEstok());
             ps.setBoolean(5, entidad.isDisponible());
             ps.setInt(6, entidad.getLibro_id());

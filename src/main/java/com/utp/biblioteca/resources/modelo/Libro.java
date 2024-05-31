@@ -5,6 +5,8 @@ public class Libro {
     private String titulo;
     private String autor;
     private String isbn;
+    private String link_imagen;
+    private String descripcion;
     private int estok;
     private boolean disponible;
 
@@ -41,6 +43,22 @@ public class Libro {
         this.isbn = isbn;
     }
 
+    public String getLink_imagen() {
+        return link_imagen;
+    }
+
+    public void setLink_imagen(String link_imagen) {
+        this.link_imagen = link_imagen;
+    }
+
+    public String getDescripcion() {
+        return descripcion;
+    }
+
+    public void setDescripcion(String descripcion) {
+        this.descripcion = descripcion;
+    }
+
     public int getEstok() {
         return estok;
     }
@@ -64,6 +82,8 @@ public class Libro {
                 ", titulo='" + titulo + '\'' +
                 ", autor='" + autor + '\'' +
                 ", isbn='" + isbn + '\'' +
+                ", link_imagen='" + link_imagen + '\'' +
+                ", descripcion='" + descripcion + '\'' +
                 ", estok=" + estok +
                 ", disponible=" + disponible +
                 '}';

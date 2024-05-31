@@ -21,6 +21,8 @@ CREATE TABLE Libro (
     titulo VARCHAR(200) NOT NULL,
     autor VARCHAR(100) NOT NULL,
     isbn VARCHAR(20) UNIQUE NOT NULL,
+    link_imagen VARCHAR(255),
+    descripcion TEXT,
     estok INT NOT NULL,
     disponible BOOLEAN NOT NULL DEFAULT TRUE
 );
