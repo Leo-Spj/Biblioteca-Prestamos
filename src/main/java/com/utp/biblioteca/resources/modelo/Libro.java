@@ -7,7 +7,7 @@ public class Libro {
     private String isbn;
     private String link_imagen;
     private String descripcion;
-    private int estok;
+    private int stock;
     private boolean disponible;
 
 
@@ -59,12 +59,12 @@ public class Libro {
         this.descripcion = descripcion;
     }
 
-    public int getEstok() {
-        return estok;
+    public int getStock() {
+        return stock;
     }
 
-    public void setEstok(int estok) {
-        this.estok = estok;
+    public void setStock(int stock) {
+        this.stock = stock;
     }
 
     public boolean isDisponible() {
@@ -84,7 +84,7 @@ public class Libro {
                 ", isbn='" + isbn + '\'' +
                 ", link_imagen='" + link_imagen + '\'' +
                 ", descripcion='" + descripcion + '\'' +
-                ", estok=" + estok +
+                ", stock=" + stock +
                 ", disponible=" + disponible +
                 '}';
     }

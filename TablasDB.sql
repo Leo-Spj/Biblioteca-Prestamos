@@ -23,7 +23,7 @@ CREATE TABLE Libro (
     isbn VARCHAR(20) UNIQUE NOT NULL,
     link_imagen VARCHAR(255),
     descripcion TEXT,
-    estok INT NOT NULL,
+    stock INT NOT NULL,
     disponible BOOLEAN NOT NULL DEFAULT TRUE
 );
 
