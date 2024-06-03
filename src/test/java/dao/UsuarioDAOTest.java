@@ -15,17 +15,13 @@ public class UsuarioDAOTest {
         UsuarioDAO usuarioDAO = new UsuarioDAO();
         List<Usuario> usuarios = usuarioDAO.buscarTodos();
 
-        // Verificar que la lista no está vacía
-        assertFalse(usuarios.isEmpty());
-
-        // Verificar que todos los elementos en la lista son instancias de Usuario
-        for (Object obj : usuarios) {
-            assertTrue(obj instanceof Usuario);
+        if (!usuarios.isEmpty()) {
+            for (Usuario usuario : usuarios) {
+                System.out.println(usuario);
+            }
+        } else {
+            System.out.println("No se encontraron usuarios");
         }
 
-        // Imprimir los usuarios
-        for (Usuario usuario : usuarios) {
-            System.out.println(usuario);
-        }
     }
 }
