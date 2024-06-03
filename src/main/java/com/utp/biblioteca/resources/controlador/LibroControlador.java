@@ -13,8 +13,8 @@ import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 
 
-@WebServlet(name = "UsuarioControlador", urlPatterns = {"/UsuarioControlador"})
-public class UsuarioControlador extends HttpServlet {
+@WebServlet(name = "LibroControlador", urlPatterns = {"/LibroControlador"})
+public class LibroControlador extends HttpServlet {
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -33,10 +33,10 @@ public class UsuarioControlador extends HttpServlet {
             out.println("<!DOCTYPE html>");
             out.println("<html>");
             out.println("<head>");
-            out.println("<title>Servlet UsuarioControlador</title>");            
+            out.println("<title>Servlet LibroControlador</title>");            
             out.println("</head>");
             out.println("<body>");
-            out.println("<h1>Servlet UsuarioControlador at " + request.getContextPath() + "</h1>");
+            out.println("<h1>Servlet LibroControlador at " + request.getContextPath() + "</h1>");
             out.println("</body>");
             out.println("</html>");
         }
