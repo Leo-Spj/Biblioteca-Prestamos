@@ -92,14 +92,14 @@ INSERT INTO Libro (isbn, titulo, autor_id, link_imagen, descripcion, stock) VALU
 
 -- Procedimiento para realizar un préstamo comprobando que el "estado" del usuario sea TRUE
 DELIMITER //
-CREATE PROCEDURE sp_realizar_prestamo(IN p_usuario_id INT, IN p_libro_id INT, IN p_dias INT)
+CREATE PROCEDURE sp_realizar_prestamo(IN p_usuario_dni INT, IN p_libro_id INT, IN p_dias INT)
 BEGIN
     DECLARE v_estado BOOLEAN;
     DECLARE v_stock INT;
 
     SELECT estado INTO v_estado
     FROM Usuario
-    WHERE usuario_id = p_usuario_id;
+    WHERE dni = p_usuario_dni;
 
     SELECT stock INTO v_stock
     FROM Libro
@@ -107,7 +107,7 @@ BEGIN
 
     IF v_estado = TRUE AND v_stock > 0 THEN
         INSERT INTO Prestamo (usuario_id, libro_id, fecha_prestamo, fecha_limite)
-        VALUES (p_usuario_id, p_libro_id, CURRENT_DATE, CURRENT_DATE + INTERVAL p_dias DAY);
+        VALUES ((SELECT usuario_id FROM Usuario WHERE dni = p_usuario_dni), p_libro_id, CURRENT_DATE, CURRENT_DATE + INTERVAL p_dias DAY);
     ELSEIF v_stock < 1 THEN
         SELECT 'No hay stock disponible para este libro' AS mensaje;
     ELSE
