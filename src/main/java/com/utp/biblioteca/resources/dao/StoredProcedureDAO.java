@@ -14,17 +14,23 @@ public class StoredProcedureDAO {
     PreparedStatement ps;
     ResultSet rs;
 
+    public StoredProcedureDAO() {
+        con = new Conexion();
+    }
+
     // Procedimiento para realizar un préstamo comprobando que el "estado" del usuario sea TRUE
     public void spRealizarPrestamo(int usuarioDni, int libroId, int dias) throws SQLException {
-    String sql = "CALL sp_realizar_prestamo(?, ?, ?)";
-    try (Connection connection = con.getConectar();
-         PreparedStatement statement = connection.prepareStatement(sql)) {
-        statement.setInt(1, usuarioDni);
-        statement.setInt(2, libroId);
-        statement.setInt(3, dias);
-        statement.execute();
+        String sql = "CALL sp_realizar_prestamo(?, ?, ?)";
+        try (Connection connection = con.getConectar();
+             PreparedStatement statement = connection.prepareStatement(sql)) {
+            statement.setInt(1, usuarioDni);
+            statement.setInt(2, libroId);
+            statement.setInt(3, dias);
+            statement.execute();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
     }
-}
 
     // Procedimiento para devolver un libro
     public void spDevolverLibro(int prestamoId) throws SQLException {
@@ -33,6 +39,8 @@ public class StoredProcedureDAO {
              PreparedStatement statement = connection.prepareStatement(sql)) {
             statement.setInt(1, prestamoId);
             statement.execute();
+        } catch (SQLException e) {
+            e.printStackTrace();
         }
     }
 }
