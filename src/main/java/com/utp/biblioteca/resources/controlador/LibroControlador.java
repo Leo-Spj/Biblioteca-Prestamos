@@ -6,6 +6,10 @@ package com.utp.biblioteca.resources.controlador;
 
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.util.List;
+
+import com.utp.biblioteca.resources.dao.LibroDAO;
+import com.utp.biblioteca.resources.modelo.Libro;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
@@ -33,7 +37,7 @@ public class LibroControlador extends HttpServlet {
             out.println("<!DOCTYPE html>");
             out.println("<html>");
             out.println("<head>");
-            out.println("<title>Servlet LibroControlador</title>");            
+            out.println("<title>Servlet LibroControlador</title>");
             out.println("</head>");
             out.println("<body>");
             out.println("<h1>Servlet LibroControlador at " + request.getContextPath() + "</h1>");
@@ -54,7 +58,12 @@ public class LibroControlador extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        processRequest(request, response);
+        LibroDAO libroDAO = new LibroDAO();
+        List<Libro> libros = libroDAO.buscarTodos();
+
+        request.setAttribute("libros", libros); // set libros in request scope
+
+        request.getRequestDispatcher("/index.jsp").forward(request, response); // forward request and response to JSP page
     }
 
     /**

@@ -1,10 +1,4 @@
-<%--
-  Created by IntelliJ IDEA.
-  User: Leo
-  Date: 05/06/2024
-  Time: 02:28 p. m.
-  To change this template use File | Settings | File Templates.
---%>
+<%--@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" --%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <html lang="es">
 
@@ -96,6 +90,18 @@
         <section>
             <h2 class="text-2xl font-bold mb-4">ULTIMOS LIBROS AGREGADOS</h2>
             <div class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-5 lg:grid-cols-7 gap-4">
+
+                <%--
+
+                <c:forEach var="libro" items="${libros}">
+                    <div class="text-center">
+                        <img src="${libro.imagenUrl}" alt="Portada de ${libro.titulo}" class="mx-auto mb-2">
+                        <p class="font-bold">${libro.titulo}</p>
+                    </div>
+                </c:forEach>
+
+                 --%>
+
                 <div class="text-center">
                     <img src="https://placehold.co/100x150" alt="Portada de MARIELLA AGOIS" class="mx-auto mb-2">
                     <p class="font-bold">MARIELLA AGOIS</p>
