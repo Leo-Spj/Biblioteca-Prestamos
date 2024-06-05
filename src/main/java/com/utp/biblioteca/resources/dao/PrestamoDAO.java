@@ -23,12 +23,13 @@ public class PrestamoDAO implements PrestamoRepository {
     public void crear(Prestamo entidad) {
         try {
             conn = con.getConectar();
-            ps = conn.prepareStatement("INSERT INTO Prestamo (usuario_id, libro_id, fecha_prestamo, fecha_devolucion, devuelto) VALUES (?, ?, ?, ?, ?)");
+            ps = conn.prepareStatement("INSERT INTO Prestamo (usuario_id, libro_id, fecha_prestamo, fecha_limite, fecha_devolucion, devuelto) VALUES (?, ?, ?, ?, ?, ?)");
             ps.setInt(1, entidad.getUsuario_id());
             ps.setInt(2, entidad.getLibro_id());
             ps.setDate(3, entidad.getFecha_prestamo());
-            ps.setDate(4, entidad.getFecha_devolucion());
-            ps.setBoolean(5, entidad.isDevuelto());
+            ps.setDate(4, entidad.getFecha_limite());
+            ps.setDate(5, entidad.getFecha_devolucion());
+            ps.setBoolean(6, entidad.isDevuelto());
             ps.executeUpdate();
         } catch (SQLException e) {
             e.printStackTrace();
@@ -48,6 +49,7 @@ public class PrestamoDAO implements PrestamoRepository {
                 prestamo.setUsuario_id(rs.getInt("usuario_id"));
                 prestamo.setLibro_id(rs.getInt("libro_id"));
                 prestamo.setFecha_prestamo(rs.getDate("fecha_prestamo"));
+                prestamo.setFecha_limite(rs.getDate("fecha_limite"));
                 prestamo.setFecha_devolucion(rs.getDate("fecha_devolucion"));
                 prestamo.setDevuelto(rs.getBoolean("devuelto"));
                 prestamos.add(prestamo);
@@ -71,6 +73,7 @@ public class PrestamoDAO implements PrestamoRepository {
                 prestamo.setUsuario_id(rs.getInt("usuario_id"));
                 prestamo.setLibro_id(rs.getInt("libro_id"));
                 prestamo.setFecha_prestamo(rs.getDate("fecha_prestamo"));
+                prestamo.setFecha_limite(rs.getDate("fecha_limite"));
                 prestamo.setFecha_devolucion(rs.getDate("fecha_devolucion"));
                 prestamo.setDevuelto(rs.getBoolean("devuelto"));
             }
@@ -84,13 +87,14 @@ public class PrestamoDAO implements PrestamoRepository {
     public void actualizar(Prestamo entidad) {
         try {
             conn = con.getConectar();
-            ps = conn.prepareStatement("UPDATE Prestamo SET usuario_id = ?, libro_id = ?, fecha_prestamo = ?, fecha_devolucion = ?, devuelto = ? WHERE prestamo_id = ?");
+            ps = conn.prepareStatement("UPDATE Prestamo SET usuario_id = ?, libro_id = ?, fecha_prestamo = ?, fecha_limite = ?, fecha_devolucion = ?, devuelto = ? WHERE prestamo_id = ?");
             ps.setInt(1, entidad.getUsuario_id());
             ps.setInt(2, entidad.getLibro_id());
             ps.setDate(3, entidad.getFecha_prestamo());
-            ps.setDate(4, entidad.getFecha_devolucion());
-            ps.setBoolean(5, entidad.isDevuelto());
-            ps.setInt(6, entidad.getPrestamo_id());
+            ps.setDate(4, entidad.getFecha_limite());
+            ps.setDate(5, entidad.getFecha_devolucion());
+            ps.setBoolean(6, entidad.isDevuelto());
+            ps.setInt(7, entidad.getPrestamo_id());
             ps.executeUpdate();
         } catch (SQLException e) {
             e.printStackTrace();

@@ -1,15 +1,14 @@
 package com.utp.biblioteca.resources.modelo;
 
 public class Libro {
+
     private int libro_id;
-    private String titulo;
-    private String autor;
     private String isbn;
+    private String titulo;
+    private int autor_id;
     private String link_imagen;
     private String descripcion;
     private int stock;
-    private boolean disponible;
-
 
     public int getLibro_id() {
         return libro_id;
@@ -17,6 +16,14 @@ public class Libro {
 
     public void setLibro_id(int libro_id) {
         this.libro_id = libro_id;
+    }
+
+    public String getIsbn() {
+        return isbn;
+    }
+
+    public void setIsbn(String isbn) {
+        this.isbn = isbn;
     }
 
     public String getTitulo() {
@@ -27,20 +34,12 @@ public class Libro {
         this.titulo = titulo;
     }
 
-    public String getAutor() {
-        return autor;
+    public int getAutor_id() {
+        return autor_id;
     }
 
-    public void setAutor(String autor) {
-        this.autor = autor;
-    }
-
-    public String getIsbn() {
-        return isbn;
-    }
-
-    public void setIsbn(String isbn) {
-        this.isbn = isbn;
+    public void setAutor_id(int autor_id) {
+        this.autor_id = autor_id;
     }
 
     public String getLink_imagen() {
@@ -67,25 +66,16 @@ public class Libro {
         this.stock = stock;
     }
 
-    public boolean isDisponible() {
-        return disponible;
-    }
-
-    public void setDisponible(boolean disponible) {
-        this.disponible = disponible;
-    }
-
     @Override
     public String toString() {
         return "Libro{" +
                 "libro_id=" + libro_id +
-                ", titulo='" + titulo + '\'' +
-                ", autor='" + autor + '\'' +
                 ", isbn='" + isbn + '\'' +
+                ", titulo='" + titulo + '\'' +
+                ", autor_id=" + autor_id +
                 ", link_imagen='" + link_imagen + '\'' +
                 ", descripcion='" + descripcion + '\'' +
                 ", stock=" + stock +
-                ", disponible=" + disponible +
                 '}';
     }
 }

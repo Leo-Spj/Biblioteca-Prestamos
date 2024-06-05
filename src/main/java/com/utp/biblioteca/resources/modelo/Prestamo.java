@@ -3,13 +3,14 @@ package com.utp.biblioteca.resources.modelo;
 import java.sql.Date;
 
 public class Prestamo {
+
     private int prestamo_id;
     private int usuario_id;
     private int libro_id;
     private Date fecha_prestamo;
+    private Date fecha_limite;
     private Date fecha_devolucion;
     private boolean devuelto;
-
 
     public int getPrestamo_id() {
         return prestamo_id;
@@ -43,6 +44,14 @@ public class Prestamo {
         this.fecha_prestamo = fecha_prestamo;
     }
 
+    public Date getFecha_limite() {
+        return fecha_limite;
+    }
+
+    public void setFecha_limite(Date fecha_limite) {
+        this.fecha_limite = fecha_limite;
+    }
+
     public Date getFecha_devolucion() {
         return fecha_devolucion;
     }
@@ -66,6 +75,7 @@ public class Prestamo {
                 ", usuario_id=" + usuario_id +
                 ", libro_id=" + libro_id +
                 ", fecha_prestamo=" + fecha_prestamo +
+                ", fecha_limite=" + fecha_limite +
                 ", fecha_devolucion=" + fecha_devolucion +
                 ", devuelto=" + devuelto +
                 '}';

@@ -1,16 +1,16 @@
 package com.utp.biblioteca.resources.modelo;
 
-public class Rol {
+public class Autor {
 
-    private int rol_id;
+    private int autor_id;
     private String nombre;
 
-    public int getRol_id() {
-        return rol_id;
+    public int getAutor_id() {
+        return autor_id;
     }
 
-    public void setRol_id(int rol_id) {
-        this.rol_id = rol_id;
+    public void setAutor_id(int autor_id) {
+        this.autor_id = autor_id;
     }
 
     public String getNombre() {
@@ -23,8 +23,8 @@ public class Rol {
 
     @Override
     public String toString() {
-        return "Rol{" +
-                "rol_id=" + rol_id +
+        return "Autor{" +
+                "autor_id=" + autor_id +
                 ", nombre='" + nombre + '\'' +
                 '}';
     }

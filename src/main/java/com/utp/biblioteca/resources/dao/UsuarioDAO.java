@@ -23,11 +23,14 @@ public class UsuarioDAO implements UsuarioRepository {
     public void crear(Usuario entidad) {
         try {
             conn = con.getConectar();
-            ps = conn.prepareStatement("INSERT INTO Usuario (nombre, correo, contraseña, rol_id) VALUES (?, ?, ?, ?)");
-            ps.setString(1, entidad.getNombre());
-            ps.setString(2, entidad.getCorreo());
-            ps.setString(3, entidad.getContraseña());
-            ps.setInt(4, entidad.getRol_id());
+            ps = conn.prepareStatement("INSERT INTO Usuario (nombres, apellidos, dni, correo, contraseña, rol_id, estado) VALUES (?, ?, ?, ?, ?, ?, ?)");
+            ps.setString(1, entidad.getNombres());
+            ps.setString(2, entidad.getApellidos());
+            ps.setInt(3, entidad.getDni());
+            ps.setString(4, entidad.getCorreo());
+            ps.setString(5, entidad.getContraseña());
+            ps.setInt(6, entidad.getRol_id());
+            ps.setBoolean(7, entidad.isEstado());
             ps.executeUpdate();
         } catch (SQLException e) {
             e.printStackTrace();
@@ -44,10 +47,13 @@ public class UsuarioDAO implements UsuarioRepository {
             while (rs.next()) {
                 Usuario usuario = new Usuario();
                 usuario.setUsuario_id(rs.getInt("usuario_id"));
-                usuario.setNombre(rs.getString("nombre"));
+                usuario.setNombres(rs.getString("nombres"));
+                usuario.setApellidos(rs.getString("apellidos"));
+                usuario.setDni(rs.getInt("dni"));
                 usuario.setCorreo(rs.getString("correo"));
                 usuario.setContraseña(rs.getString("contraseña"));
                 usuario.setRol_id(rs.getInt("rol_id"));
+                usuario.setEstado(rs.getBoolean("estado"));
                 usuarios.add(usuario);
             }
         } catch (SQLException e) {
@@ -66,10 +72,13 @@ public class UsuarioDAO implements UsuarioRepository {
             rs = ps.executeQuery();
             while (rs.next()) {
                 usuario.setUsuario_id(rs.getInt("usuario_id"));
-                usuario.setNombre(rs.getString("nombre"));
+                usuario.setNombres(rs.getString("nombres"));
+                usuario.setApellidos(rs.getString("apellidos"));
+                usuario.setDni(rs.getInt("dni"));
                 usuario.setCorreo(rs.getString("correo"));
                 usuario.setContraseña(rs.getString("contraseña"));
                 usuario.setRol_id(rs.getInt("rol_id"));
+                usuario.setEstado(rs.getBoolean("estado"));
             }
         } catch (SQLException e) {
             e.printStackTrace();
@@ -81,12 +90,15 @@ public class UsuarioDAO implements UsuarioRepository {
     public void actualizar(Usuario entidad) {
         try {
             conn = con.getConectar();
-            ps = conn.prepareStatement("UPDATE Usuario SET nombre = ?, correo = ?, contraseña = ?, rol_id = ? WHERE usuario_id = ?");
-            ps.setString(1, entidad.getNombre());
-            ps.setString(2, entidad.getCorreo());
-            ps.setString(3, entidad.getContraseña());
-            ps.setInt(4, entidad.getRol_id());
-            ps.setInt(5, entidad.getUsuario_id());
+            ps = conn.prepareStatement("UPDATE Usuario SET nombres = ?, apellidos = ?, dni = ?, correo = ?, contraseña = ?, rol_id = ?, estado = ? WHERE usuario_id = ?");
+            ps.setString(1, entidad.getNombres());
+            ps.setString(2, entidad.getApellidos());
+            ps.setInt(3, entidad.getDni());
+            ps.setString(4, entidad.getCorreo());
+            ps.setString(5, entidad.getContraseña());
+            ps.setInt(6, entidad.getRol_id());
+            ps.setBoolean(7, entidad.isEstado());
+            ps.setInt(8, entidad.getUsuario_id());
             ps.executeUpdate();
         } catch (SQLException e) {
             e.printStackTrace();
