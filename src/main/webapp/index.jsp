@@ -44,21 +44,26 @@
         </div>
     </div>
 
-    <div class="bg-ocre-dark py-2">
-        <div class="container mx-auto flex space-x-4 text-white">
-            <a href="#"><i class="fab fa-facebook-f"></i></a>
-            <a href="#"><i class="fab fa-twitter"></i></a>
-            <a href="#"><i class="fab fa-instagram"></i></a>
-            <a href="#"><i class="fab fa-youtube"></i></a>
-            <a href="#"><i class="fab fa-whatsapp"></i></a>
+    <div class="bg-ocre-dark py-2 px-4">
+        <div class="container mx-auto flex flex-col md:flex-row justify-between items-center space-y-4 md:space-y-0">
+            <div class="flex space-x-4">
+                <a href="#" class="text-white">Libros</a>
+                <a href="#" class="text-white">Donaciones</a>
+            </div>
+
+            <div class="flex space-x-4 text-white">
+                <a href="#"><i class="fab fa-facebook-f"></i></a>
+                <a href="#"><i class="fab fa-twitter"></i></a>
+                <a href="#"><i class="fab fa-instagram"></i></a>
+                <a href="#"><i class="fab fa-youtube"></i></a>
+                <a href="#"><i class="fab fa-whatsapp"></i></a>
+            </div>
         </div>
     </div>
+
     <nav class="bg-brown-700 py-2">
-        <div class="container mx-auto flex space-x-4">
-            <a href="#" class="text-white">Libros</a>
-            <a href="#" class="text-white">Donaciones</a>
-        </div>
     </nav>
+
     <main class="container mx-auto py-8">
         <section class="mb-12">
             <h2 class="text-2xl font-bold mb-4">DESTACADOS DEL MES</h2>
