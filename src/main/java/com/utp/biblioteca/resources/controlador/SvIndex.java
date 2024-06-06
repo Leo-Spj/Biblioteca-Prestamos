@@ -6,9 +6,12 @@ package com.utp.biblioteca.resources.controlador;
 
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.sql.PreparedStatement;
+import java.util.ArrayList;
 import java.util.List;
 
 import com.utp.biblioteca.resources.dao.LibroDAO;
+import com.utp.biblioteca.resources.dao.PrestamoDAO;
 import com.utp.biblioteca.resources.modelo.Libro;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;
@@ -19,12 +22,6 @@ import jakarta.servlet.http.HttpServletResponse;
 
 @WebServlet(name = "SvIndex", urlPatterns = {"/"})
 public class SvIndex extends HttpServlet {
-
-    private LibroDAO libroDAO;
-
-    public void init() {
-        libroDAO = new LibroDAO();
-    }
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -66,8 +63,16 @@ public class SvIndex extends HttpServlet {
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
         try {
+            PrestamoDAO prestamoDAO = new PrestamoDAO();
+            LibroDAO libroDAO = new LibroDAO();
+
             List<Libro> libros = libroDAO.buscarTodos();
             request.setAttribute("libros", libros);
+
+            List<Libro> topLibros = prestamoDAO.buscarTop(3);
+            request.setAttribute("topLibros", topLibros);
+
+            // Redirige a la página JSP
             request.getRequestDispatcher("/index.jsp").forward(request, response);
         } catch (Exception e) {
             throw new ServletException(e);

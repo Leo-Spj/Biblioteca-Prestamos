@@ -1,6 +1,7 @@
 package com.utp.biblioteca.resources.dao;
 
 import com.utp.biblioteca.resources.configuracion.Conexion;
+import com.utp.biblioteca.resources.modelo.Libro;
 import com.utp.biblioteca.resources.modelo.Prestamo;
 import com.utp.biblioteca.resources.repositorio.PrestamoRepository;
 
@@ -126,5 +127,24 @@ public class PrestamoDAO implements PrestamoRepository {
             e.printStackTrace();
         }
         return existe;
+    }
+
+    // los 3 libros mas prestados "TOP"
+    public List<Libro> buscarTop(int top) {
+        List<Libro> libros = new ArrayList<>();
+        try {
+            conn = con.getConectar();
+            ps = conn.prepareStatement("SELECT libro_id, COUNT(*) as count FROM Prestamo GROUP BY libro_id ORDER BY count DESC LIMIT ?");
+            ps.setInt(1, top);
+            rs = ps.executeQuery();
+            while (rs.next()) {
+                int libro_id = rs.getInt("libro_id");
+                Libro libro = new LibroDAO().buscarUno(libro_id);
+                libros.add(libro);
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return libros;
     }
 }

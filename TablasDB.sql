@@ -69,9 +69,9 @@ INSERT INTO Usuario (nombres, apellidos, dni, correo, contraseña, rol_id) VALUE
     ('Bibliotecario', 'Bibliotecario', 12345678, 'biblioteca@utp.edu.pe', 'biblioteca123', 1);
 
 INSERT INTO Usuario (nombres, apellidos, dni, rol_id) VALUES
-    ('Usuario', 'Usuario', 87654321, 2),
-    ('Usuario2', 'Usuario2', 87654322, 2),
-    ('Usuario3', 'Usuario3', 87654323, 2);
+    ('Usuario2', 'Usuario', 87654321, 2),
+    ('Usuario3', 'Usuario2', 87654322, 2),
+    ('Usuario4', 'Usuario3', 87654323, 2);
 
 -- Insertar registros en Autor
 INSERT INTO Autor (nombre) VALUES
@@ -159,7 +159,10 @@ INSERT INTO Libro (isbn, titulo, autor_id, descripcion, stock) VALUES
     ('5036265268', 'Residencia en la tierra', 9, 'Serie de poemas que exploran la alienación y el absurdo de la existencia humana.', 1),
     ('6626438257', 'Memorial de Isla Negra', 9, 'Poemario autobiográfico que recorre la vida del poeta y su relación con Chile.', 1);
 
-
+INSERT INTO prestamo (usuario_id, libro_id, fecha_prestamo, fecha_limite, fecha_devolucion, devuelto) VALUES
+  (2, 7, '2021-09-01', '2021-09-15', '2021-09-15', TRUE),
+  (3, 48, '2021-09-01', '2021-09-15', '2021-09-15', TRUE),
+  (4, 39, '2021-09-01', '2021-09-15', '2021-09-15', TRUE);
 
 -- Stored Procedures
 

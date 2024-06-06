@@ -66,30 +66,22 @@
 
     <main class="container mx-auto py-8">
         <section class="mb-12">
-            <h2 class="text-2xl font-bold mb-4">DESTACADOS DEL MES</h2>
+            <h2 class="ml-2 text-2xl font-bold mb-4">DESTACADOS DEL MES</h2>
+
             <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
-                <div class="bg-crema-claro p-4 rounded-lg flex flex-col sm:flex-row items-center">
-                    <div class="text-center sm:text-left">
-                        <h3 class="font-bold">GRANTA 25 - PERÚ</h3>
-                        <p>42 escritores despliegan la realidad del país, atravesada por la historia, la política, el arte, el amor y la barbarie...</p>
+
+                <c:forEach var="libro" items="${topLibros}">
+                    <div class="bg-crema-claro p-4 rounded-lg flex flex-col sm:flex-row items-center">
+                        <div class="text-center sm:text-left">
+                            <h3 class="font-bold">${libro.titulo}</h3>
+                            <p>${libro.descripcion}</p>
+                        </div>
+                        <img src="${libro.link_imagen}" alt="Portada de ${libro.titulo}" class="mt-4 sm:mt-0 sm:ml-4">
                     </div>
-                    <img src="https://placehold.co/100x150" alt="Portada de GRANTA 25 - PERÚ" class="mt-4 sm:mt-0 sm:ml-4">
-                </div>
-                <div class="bg-crema-claro p-4 rounded-lg flex flex-col sm:flex-row items-center">
-                    <div class="text-center sm:text-left">
-                        <h3 class="font-bold">NUESTROS MUERTOS</h3>
-                        <p>El drama humano de decenas de familias que buscan esclarecer la verdad, y que termina por revelar una cadena de negligencias.</p>
-                    </div>
-                    <img src="https://placehold.co/100x150" alt="Portada de NUESTROS MUERTOS" class="mt-4 sm:mt-0 sm:ml-4">
-                </div>
-                <div class="bg-crema-claro p-4 rounded-lg flex flex-col sm:flex-row items-center">
-                    <div class="text-center sm:text-left">
-                        <h3 class="font-bold">EL INVENCIBLE VERANO DE LILIANA</h3>
-                        <p>Una excavación en la vida de una mujer que careció del lenguaje necesario para luchar contra la violencia sexista</p>
-                    </div>
-                    <img src="https://placehold.co/100x150" alt="Portada de EL INVENCIBLE VERANO DE LILIANA" class="mt-4 sm:mt-0 sm:ml-4">
-                </div>
+                </c:forEach>
+
             </div>
+
         </section>
 
         <section>
