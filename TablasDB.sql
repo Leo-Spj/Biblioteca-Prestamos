@@ -81,10 +81,25 @@ INSERT INTO Autor (nombre) VALUES
     ('César Vallejo'),
     ('José María Arguedas');
 
+DELIMITER //
+
+CREATE TRIGGER tr_set_default_image
+    BEFORE INSERT ON Libro
+    FOR EACH ROW
+BEGIN
+    IF NEW.link_imagen IS NULL THEN
+        SET NEW.link_imagen = CONCAT('https://placehold.co/100x150?text=', REPLACE(NEW.titulo, ' ', '+'));
+    END IF;
+END;
+
+//
+
+DELIMITER ;
+
 -- Insertar registros en Libro
 INSERT INTO Libro (isbn, titulo, autor_id, link_imagen, descripcion, stock) VALUES
-    ('978-84-376-0494-7', 'Cien años de soledad', 1, 'https://www.postimg.jpg', 'Cien años de soledad es una novela del escritor colombiano Gabriel García Márquez, ganador del Premio Nobel de Literatura en 1982. Es considerada una obra maestra de la literatura hispanoamericana y universal, así como una de las obras más traducidas y leídas en español.', 10),
-    ('978-84-376-0634-2', 'La casa verde', 2, 'https://www.postimg.jpg', 'La casa verde es la novela más conocida del escritor peruano Mario Vargas Llosa, publicada en 1966. La obra es considerada una de las más importantes de la literatura hispanoamericana del siglo XX.', 5);
+    ('978-84-376-0494-7', 'Cien años de soledad', 1, NULL, 'Cien años de soledad es una novela del escritor colombiano Gabriel García Márquez, ganador del Premio Nobel de Literatura en 1982. Es considerada una obra maestra de la literatura hispanoamericana y universal, así como una de las obras más traducidas y leídas en español.', 10),
+    ('978-84-376-0634-2', 'La casa verde', 2, NULL, 'La casa verde es la novela más conocida del escritor peruano Mario Vargas Llosa, publicada en 1966. La obra es considerada una de las más importantes de la literatura hispanoamericana del siglo XX.', 5);
 
 
 
