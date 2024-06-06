@@ -76,13 +76,17 @@ INSERT INTO Usuario (nombres, apellidos, dni, rol_id) VALUES
 -- Insertar registros en Autor
 INSERT INTO Autor (nombre) VALUES
     ('Gabriel García Márquez'),
+    ('Isabel Allende'),
+    ('Jorge Luis Borges'),
+    ('Juan Rulfo'),
+    ('Julio Cortázar'),
+    ('Laura Esquivel'),
     ('Mario Vargas Llosa'),
-    ('Julio Ramón Ribeyro'),
-    ('César Vallejo'),
-    ('José María Arguedas');
+    ('Octavio Paz'),
+    ('Pablo Neruda');
+
 
 DELIMITER //
-
 CREATE TRIGGER tr_set_default_image
     BEFORE INSERT ON Libro
     FOR EACH ROW
@@ -91,15 +95,69 @@ BEGIN
         SET NEW.link_imagen = CONCAT('https://placehold.co/100x150?text=', REPLACE(NEW.titulo, ' ', '+'));
     END IF;
 END;
-
 //
-
 DELIMITER ;
 
+
 -- Insertar registros en Libro
-INSERT INTO Libro (isbn, titulo, autor_id, link_imagen, descripcion, stock) VALUES
-    ('978-84-376-0494-7', 'Cien años de soledad', 1, NULL, 'Cien años de soledad es una novela del escritor colombiano Gabriel García Márquez, ganador del Premio Nobel de Literatura en 1982. Es considerada una obra maestra de la literatura hispanoamericana y universal, así como una de las obras más traducidas y leídas en español.', 10),
-    ('978-84-376-0634-2', 'La casa verde', 2, NULL, 'La casa verde es la novela más conocida del escritor peruano Mario Vargas Llosa, publicada en 1966. La obra es considerada una de las más importantes de la literatura hispanoamericana del siglo XX.', 5);
+INSERT INTO Libro (isbn, titulo, autor_id, descripcion, stock) VALUES
+    ('3888580894', 'Cien años de soledad', 1, 'Novela icónica que sigue la historia de la familia Buendía en el pueblo ficticio de Macondo.', 2),
+    ('5215707454', 'El amor en los tiempos del cólera', 1, 'Historia de amor entre Fermina Daza y Florentino Ariza que abarca varias décadas.', 3),
+    ('2997016528', 'Crónica de una muerte anunciada', 1, 'Historia sobre la muerte de Santiago Nasar, narrada como una crónica periodística.', 3),
+    ('1948210141', 'El coronel no tiene quien le escriba', 1, 'Relato sobre un coronel retirado que espera una pensión que nunca llega.', 3),
+    ('5396283330', 'Relato de un náufrago', 1, 'Historia basada en hechos reales sobre un marinero que sobrevive diez días a la deriva en el Caribe.', 3),
+    ('4282237437', 'El otoño del patriarca', 1, 'Novela que describe la decadencia de un dictador caribeño.', 3),
+    ('5219989508', 'Memoria de mis putas tristes', 1, 'Historia de un hombre de 90 años que decide regalarse una noche de amor con una joven virgen.', 1),
+    ('4123306029', 'Noticia de un secuestro', 1, 'Crónica periodística sobre una serie de secuestros en Colombia llevados a cabo por el cartel de Medellín.', 1),
+    ('8434688259', 'Doce cuentos peregrinos', 1, 'Conjunto de relatos que tienen en común a personajes latinoamericanos viviendo en Europa.', 3),
+    ('7001079571', 'La hojarasca', 1, 'Primera novela del autor, que introduce el pueblo de Macondo y sus habitantes.', 2),
+    ('8843607213', 'El general en su laberinto', 1, 'Novela histórica que narra los últimos días de Simón Bolívar.', 2),
+    ('8798519701', 'Vivir para contarla', 1, 'Autobiografía del autor, que abarca su infancia y juventud.', 1),
+    ('7134435711', 'La casa de los espíritus', 2, 'Saga familiar que mezcla realismo mágico con la historia política de Chile.', 2),
+    ('8455392077', 'Eva Luna', 2, 'Novela que sigue la vida de Eva Luna, una joven huérfana con un talento innato para contar historias.', 1),
+    ('7185986487', 'De amor y de sombra', 2, 'Historia de amor ambientada en un país latinoamericano bajo una dictadura militar.', 1),
+    ('8767162147', 'Paula', 2, 'Libro de memorias escrito tras la enfermedad y muerte de la hija de la autora.', 3),
+    ('2647566867', 'Hija de la fortuna', 2, 'Historia de una joven chilena que viaja a California durante la fiebre del oro en busca de su amor perdido.', 3),
+    ('6325164774', 'El amante japonés', 2, 'Historia de amor entre una joven polaca y un jardinero japonés en el San Francisco de la Segunda Guerra Mundial.', 2),
+    ('6084252216', 'La suma de los días', 2, 'Continuación de las memorias de Allende, centrada en su vida familiar en California.', 2),
+    ('4988450015', 'Inés del alma mía', 2, 'Novela histórica sobre Inés Suárez, una conquistadora española en el siglo XVI.', 2),
+    ('2860112969', 'Ficciones', 3, 'Colección de cuentos que exploran temas como la metafísica, la literatura y la identidad.', 3),
+    ('9472143119', 'El Aleph', 3, 'Conjunto de relatos que incluyen elementos de la filosofía, la teología y la literatura.', 3),
+    ('5305404287', 'El libro de arena', 3, 'Colección de cuentos que abordan temas como el infinito y la identidad.', 2),
+    ('4605999020', 'Historia universal de la infamia', 3, 'Serie de biografías ficticias de criminales y aventureros.', 3),
+    ('5430430360', 'El informe de Brodie', 3, 'Colección de cuentos que exploran lo fantástico y lo metafísico.', 1),
+    ('4692161890', 'La memoria de Shakespeare', 3, 'Colección de cuentos publicados póstumamente que abordan temas recurrentes del autor.', 3),
+    ('3527112981', 'Seis problemas para don Isidro Parodi', 3, 'Colección de relatos policiales escritos en colaboración con Adolfo Bioy Casares bajo el seudónimo de H. Bustos Domecq.', 3),
+    ('8862721725', 'Manual de zoología fantástica', 3, 'Compendio de seres mitológicos y fantásticos de diversas culturas.', 2),
+    ('3754841856', 'Pedro Páramo', 4, 'Novela sobre Juan Preciado, quien viaja al pueblo de Comala en busca de su padre, Pedro Páramo.', 2),
+    ('5405199911', 'Rayuela', 5, 'Novela que se puede leer de varias maneras, explorando la vida de un grupo de intelectuales en París y Buenos Aires.', 1),
+    ('7423166542', 'Bestiario', 5, 'Primera colección de cuentos publicada por Cortázar, donde lo fantástico irrumpe en lo cotidiano.', 2),
+    ('1087162506', 'Final del juego', 5, 'Conjunto de relatos que incluyen elementos de lo fantástico y lo absurdo.', 2),
+    ('7895373356', 'Los premios', 5, 'Novela que sigue a un grupo de personas que ganan un viaje en barco y sus experiencias a bordo.', 3),
+    ('1552680208', 'Las armas secretas', 5, 'Colección de cuentos que incluye algunos de los relatos más conocidos del autor.', 1),
+    ('5581758914', 'La vuelta al día en ochenta mundos', 5, 'Colección de ensayos, cuentos y reflexiones sobre diversos temas, con ilustraciones y fotografías.', 2),
+    ('5640784008', '62 Modelo para armar', 5, 'Novela experimental que sigue a un grupo de personajes en diversas ciudades de Europa.', 2),
+    ('7604486737', 'Un tal Lucas', 5, 'Conjunto de relatos, poemas y reflexiones protagonizados', 3),
+    ('2259208617', 'Como agua para chocolate', 6, 'Novela que combina recetas de cocina con una historia de amor en tiempos de la Revolución Mexicana.', 1),
+    ('6143579964', 'La ley del amor', 6, 'Novela que mezcla elementos de ciencia ficción y romance en un futuro distópico.', 2),
+    ('1974320067', 'Tan veloz como el deseo', 6, 'Novela sobre un hombre con el don de interpretar los deseos de las personas a través del oído.', 3),
+    ('2113103506', 'Malinche', 6, 'Novela histórica sobre la vida de Malinche, la intérprete y amante de Hernán Cortés.', 3),
+    ('8725928128', 'La ciudad y los perros', 7, 'Novela sobre la vida en una academia militar en Lima, Perú, y las tensiones sociales y personales de los cadetes.', 1),
+    ('6447523443', 'La fiesta del chivo', 7, 'Historia basada en la dictadura de Rafael Leónidas Trujillo en República Dominicana.', 1),
+    ('1203345490', 'Conversación en La Catedral', 7, 'Novela que explora la corrupción y la decadencia moral en Perú durante la dictadura de Manuel A. Odría.', 2),
+    ('7323111686', 'La casa verde', 7, 'Novela que entrelaza varias historias en la selva peruana y en un burdel.', 3),
+    ('6197490784', 'Pantaleón y las visitadoras', 7, 'Novela satírica sobre un oficial del ejército peruano encargado de organizar un servicio de prostitutas para las tropas en la Amazonía.', 1),
+    ('1148782808', 'Los cachorros', 7, 'Novela corta que sigue la vida de un grupo de amigos en Lima desde su infancia hasta la adultez.', 2),
+    ('2102104421', 'Travesuras de la niña mala', 7, 'Historia de amor entre Ricardo Somocurcio y una mujer que aparece y desaparece a lo largo de su vida.', 2),
+    ('2810822794', 'El sueño del celta', 7, 'Novela basada en la vida de Roger Casement, un diplomático británico que denunció los abusos coloniales en el Congo y Perú.', 1),
+    ('3337921053', 'El laberinto de la soledad', 8, 'Ensayo sobre la identidad mexicana y el carácter del pueblo mexicano.', 2),
+    ('4639190320', 'Sor Juana Inés de la Cruz o Las trampas de la fe', 8, 'Biografía de la poeta y monja mexicana Sor Juana Inés de la Cruz.', 1),
+    ('1380981131', 'El arco y la lira', 8, 'Ensayo sobre la poesía y su relación con la vida y la cultura.', 3),
+    ('1935045932', 'Piedra de sol', 8, 'Extenso poema circular que refleja las preocupaciones filosóficas y estéticas del autor.', 2),
+    ('8484165258', 'Veinte poemas de amor y una canción desesperada', 9, 'Colección de poemas que exploran el amor y la pérdida.', 3),
+    ('2803601269', 'Canto general', 9, 'Extensa obra poética que traza la historia de América Latina desde la prehistoria hasta el siglo XX.', 2),
+    ('5036265268', 'Residencia en la tierra', 9, 'Serie de poemas que exploran la alienación y el absurdo de la existencia humana.', 1),
+    ('6626438257', 'Memorial de Isla Negra', 9, 'Poemario autobiográfico que recorre la vida del poeta y su relación con Chile.', 1);
 
 
 
