@@ -66,16 +66,5 @@ public class Libro {
         this.stock = stock;
     }
 
-    @Override
-    public String toString() {
-        return "Libro{" +
-                "libro_id=" + libro_id +
-                ", isbn='" + isbn + '\'' +
-                ", titulo='" + titulo + '\'' +
-                ", autor_id=" + autor_id +
-                ", link_imagen='" + link_imagen + '\'' +
-                ", descripcion='" + descripcion + '\'' +
-                ", stock=" + stock +
-                '}';
-    }
+
 }

@@ -1,4 +1,4 @@
-<%--@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" --%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <html lang="es">
 
@@ -56,7 +56,7 @@
     <nav class="bg-brown-700 py-2">
         <div class="container mx-auto flex space-x-4">
             <a href="#" class="text-white">Libros</a>
-            <a href="#" class="text-white">Eventos</a>
+            <a href="#" class="text-white">Donaciones</a>
         </div>
     </nav>
     <main class="container mx-auto py-8">
@@ -91,50 +91,19 @@
             <h2 class="text-2xl font-bold mb-4">ULTIMOS LIBROS AGREGADOS</h2>
             <div class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-5 lg:grid-cols-7 gap-4">
 
-                <%--
-
-                <c:forEach var="libro" items="${libros}">
-                    <div class="text-center">
-                        <img src="${libro.imagenUrl}" alt="Portada de ${libro.titulo}" class="mx-auto mb-2">
-                        <p class="font-bold">${libro.titulo}</p>
-                    </div>
-                </c:forEach>
-
-                 --%>
-
-                <div class="text-center">
-                    <img src="https://placehold.co/100x150" alt="Portada de MARIELLA AGOIS" class="mx-auto mb-2">
-                    <p class="font-bold">MARIELLA AGOIS</p>
-                </div>
-                <div class="text-center">
-                    <img src="https://placehold.co/100x150" alt="Portada de EL EXPERIMENTO" class="mx-auto mb-2">
-                    <p class="font-bold">EL EXPERIMENTO</p>
-                </div>
-                <div class="text-center">
-                    <img src="https://placehold.co/100x150" alt="Portada de VIDA ANIMAL" class="mx-auto mb-2">
-                    <p class="font-bold">VIDA ANIMAL</p>
-                </div>
-                <div class="text-center">
-                    <img src="https://placehold.co/100x150" alt="Portada de LOS OJOS DE MONA" class="mx-auto mb-2">
-                    <p class="font-bold">LOS OJOS DE MONA</p>
-                </div>
-                <div class="text-center">
-                    <img src="https://placehold.co/100x150" alt="Portada de CUCHILLO" class="mx-auto mb-2">
-                    <p class="font-bold">CUCHILLO</p>
-                </div>
-                <div class="text-center">
-                    <img src="https://placehold.co/100x150" alt="Portada de EL RETRATO DE LA" class="mx-auto mb-2">
-                    <p class="font-bold">EL RETRATO DE LA</p>
-                </div>
-                <div class="text-center">
-                    <img src="https://placehold.co/100x150" alt="Portada de MARIELLA AGOIS" class="mx-auto mb-2">
-                    <p class="font-bold">MARIELLA AGOIS</p>
-                </div>
-                <div class="text-center">
-                    <img src="https://placehold.co/100x150" alt="Portada de EL EXPERIMENTO" class="mx-auto mb-2">
-                    <p class="font-bold">EL EXPERIMENTO</p>
-                </div>
-            </div>
+                <c:choose>
+                    <c:when test="${empty libros}">
+                        <p>No se encontraron libros.</p>
+                    </c:when>
+                    <c:otherwise>
+                        <c:forEach var="libro" items="${libros}">
+                            <div class="text-center">
+                                <img src="${libro.link_imagen}" alt="Portada de ${libro.titulo}" class="mx-auto mb-2">
+                                <p class="font-bold">${libro.titulo}</p>
+                            </div>
+                        </c:forEach>
+                    </c:otherwise>
+                </c:choose>
 
         </section>
     </main>

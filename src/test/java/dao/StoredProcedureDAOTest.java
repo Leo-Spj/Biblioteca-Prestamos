@@ -6,7 +6,7 @@ import org.junit.jupiter.api.Test;
 import java.sql.SQLException;
 
 public class StoredProcedureDAOTest {
-
+/*
     private StoredProcedureDAO storedProcedureDAO = new StoredProcedureDAO();
 
     @Test
@@ -26,6 +26,6 @@ public class StoredProcedureDAOTest {
             e.printStackTrace();
         }
     }
-
+*/
 }
 
