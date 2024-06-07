@@ -5,7 +5,7 @@ public class Libro {
     private int libro_id;
     private String isbn;
     private String titulo;
-    private int autor_id;
+    private Autor autor = new Autor();
     private String link_imagen;
     private String descripcion;
     private int stock;
@@ -34,12 +34,12 @@ public class Libro {
         this.titulo = titulo;
     }
 
-    public int getAutor_id() {
-        return autor_id;
+    public Autor getAutor() {
+        return autor;
     }
 
-    public void setAutor_id(int autor_id) {
-        this.autor_id = autor_id;
+    public void setAutor(Autor autor) {
+        this.autor = autor;
     }
 
     public String getLink_imagen() {
@@ -66,5 +66,16 @@ public class Libro {
         this.stock = stock;
     }
 
-
+    @Override
+    public String toString() {
+        return "Libro{" +
+                "libro_id=" + libro_id +
+                ", isbn='" + isbn + '\'' +
+                ", titulo='" + titulo + '\'' +
+                ", autor=" + autor +
+                ", link_imagen='" + link_imagen + '\'' +
+                ", descripcion='" + descripcion + '\'' +
+                ", stock=" + stock +
+                '}';
+    }
 }

@@ -37,7 +37,7 @@
             <img src="https://placehold.co/150x50" alt="El Virrey Librería Logo" class="h-12 mb-4 sm:mb-0">
             <div class="relative w-full sm:w-1/2">
                 <input type="text" placeholder="Título, Autor o ISBN" class="w-full border border-gray-300 rounded-full py-2 px-4">
-                <button class="absolute right-2 top-2 text-brown-700">
+                <button class="absolute right-4 top-1/2 transform -translate-y-1/2 text-brown-700">
                     <i class="fas fa-search"></i>
                 </button>
             </div>
@@ -68,11 +68,12 @@
         <section class="mb-12">
             <h2 class="ml-2 text-2xl font-bold mb-4">DESTACADOS DEL MES</h2>
 
-            <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
+            <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 justify-items-center align-items-center">
 
                 <c:forEach var="libro" items="${topLibros}">
-                    <div class="bg-crema-claro p-4 rounded-lg flex flex-col sm:flex-row items-center">
+                    <div class="bg-crema-claro p-4 rounded-lg max-w-md flex flex-col sm:flex-row items-center">
                         <div class="text-center sm:text-left">
+                            <p class="text-xs">${libro.autor.nombre}</p>
                             <h3 class="font-bold">${libro.titulo}</h3>
                             <p>${libro.descripcion}</p>
                         </div>
@@ -90,7 +91,7 @@
            Integer totalPaginas = (Integer) session.getAttribute("totalPaginas"); %>
 
         <section>
-            <h2 class="text-2xl font-bold mb-4">ÚLTIMOS LIBROS AGREGADOS</h2>
+            <h2 class="ml-2 text-2xl font-bold mb-4">ÚLTIMOS LIBROS AGREGADOS</h2>
             <div class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-5 lg:grid-cols-7 gap-4">
                 <c:choose>
                     <c:when test="${empty libros}">
@@ -101,12 +102,13 @@
                             <div class="text-center">
                                 <img src="${libro.link_imagen}" alt="Portada de ${libro.titulo}" class="mx-auto mb-2">
                                 <p class="font-bold">${libro.titulo}</p>
+                                <p class="text-xs">${libro.autor.nombre}</p>
                             </div>
                         </c:forEach>
                     </c:otherwise>
                 </c:choose>
             </div>
-            <div class="pagination mt-4">
+            <div class="pagination mt-4 flex justify-center items-center">
                 <c:if test="${paginaActual > 1}">
                     <a href="<c:url value='/?accion=paginar&pagina=${paginaActual - 1}' />" class="text-blue-500 hover:underline">Anterior</a>
                 </c:if>
