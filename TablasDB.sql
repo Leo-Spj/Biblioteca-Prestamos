@@ -86,7 +86,6 @@ INSERT INTO Autor (nombre) VALUES
     ('Pablo Neruda');
 
 
-DELIMITER //
 CREATE TRIGGER tr_set_default_image
     BEFORE INSERT ON Libro
     FOR EACH ROW
@@ -95,8 +94,7 @@ BEGIN
         SET NEW.link_imagen = CONCAT('https://placehold.co/100x150?text=', REPLACE(NEW.titulo, ' ', '+'));
     END IF;
 END;
-//
-DELIMITER ;
+
 
 
 -- Insertar registros en Libro
@@ -159,7 +157,7 @@ INSERT INTO Libro (isbn, titulo, autor_id, descripcion, stock) VALUES
     ('5036265268', 'Residencia en la tierra', 9, 'Serie de poemas que exploran la alienación y el absurdo de la existencia humana.', 1),
     ('6626438257', 'Memorial de Isla Negra', 9, 'Poemario autobiográfico que recorre la vida del poeta y su relación con Chile.', 1);
 
-INSERT INTO prestamo (usuario_id, libro_id, fecha_prestamo, fecha_limite, fecha_devolucion, devuelto) VALUES
+INSERT INTO Prestamo (usuario_id, libro_id, fecha_prestamo, fecha_limite, fecha_devolucion, devuelto) VALUES
   (2, 7, '2021-09-01', '2021-09-15', '2021-09-15', TRUE),
   (3, 48, '2021-09-01', '2021-09-15', '2021-09-15', TRUE),
   (4, 39, '2021-09-01', '2021-09-15', '2021-09-15', TRUE);
@@ -167,7 +165,7 @@ INSERT INTO prestamo (usuario_id, libro_id, fecha_prestamo, fecha_limite, fecha_
 -- Stored Procedures
 
 -- Procedimiento para realizar un préstamo comprobando que el "estado" del usuario sea TRUE
-DELIMITER //
+
 CREATE PROCEDURE sp_realizar_prestamo(IN p_usuario_dni INT, IN p_libro_id INT, IN p_dias INT)
 BEGIN
     DECLARE v_estado BOOLEAN;
@@ -189,25 +187,23 @@ BEGIN
     ELSE
         SELECT 'El usuario no puede realizar préstamos' AS mensaje;
     END IF;
-END //
-DELIMITER ;
+END ;
 
 -- Procedimiento para devolver un libro
-DELIMITER //
+
 CREATE PROCEDURE sp_devolver_libro(IN p_prestamo_id INT)
 BEGIN
     UPDATE Prestamo
     SET fecha_devolucion = CURRENT_DATE,
         devuelto = TRUE
     WHERE prestamo_id = p_prestamo_id;
-END //
-DELIMITER ;
+END ;
 
 
 -- Triggers
 
 -- Trigger para actualizar el stock de un libro cuando se realiza un préstamo
-DELIMITER //
+
 CREATE TRIGGER tr_actualizar_stock_prestamo
     AFTER INSERT ON Prestamo
     FOR EACH ROW
@@ -215,11 +211,10 @@ BEGIN
     UPDATE Libro
     SET stock = stock - 1
     WHERE libro_id = NEW.libro_id;
-END //
-DELIMITER ;
+END ;
 
 -- Trigger para actualizar el stock de un libro cuando se devuelve un libro
-DELIMITER //
+
 CREATE TRIGGER tr_actualizar_stock_devolucion
     AFTER UPDATE ON Prestamo
     FOR EACH ROW
@@ -229,15 +224,14 @@ BEGIN
         SET stock = stock + 1
         WHERE libro_id = NEW.libro_id;
     END IF;
-END //
-DELIMITER ;
+END;
 
 
 -- Eventos
 
 -- Evento para verificar si hay libros que se han pasado de la fecha límite de devolución
 -- y marcar a los usuarios "estado" como FALSE
-DELIMITER //
+
 CREATE EVENT e_verificar_prestamos_vencidos
     ON SCHEDULE EVERY 1 DAY
         STARTS (CURRENT_TIMESTAMP + INTERVAL 11 HOUR)
@@ -251,5 +245,4 @@ CREATE EVENT e_verificar_prestamos_vencidos
             WHERE fecha_limite < CURRENT_DATE
               AND devuelto = FALSE
         );
-    END //
-DELIMITER ;
+    END;
