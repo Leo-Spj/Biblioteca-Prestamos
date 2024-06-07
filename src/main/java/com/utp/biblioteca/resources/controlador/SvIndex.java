@@ -49,7 +49,31 @@ public class SvIndex extends HttpServlet {
         }
     }
 
-    // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
+
+    private List<Libro> obtenerLibrosPaginados(int pagina, int cantidad) {
+        LibroDAO libroDAO = new LibroDAO();
+        return libroDAO.buscarPaginado(pagina, cantidad);
+    }
+
+    private List<Libro> obtenerTopLibros(int cantidad) {
+        PrestamoDAO prestamoDAO = new PrestamoDAO();
+        return prestamoDAO.buscarTop(cantidad);
+    }
+
+    private int obtenerCantidad(HttpServletRequest request) {
+        return request.getParameter("cantidad") != null ?
+                Integer.parseInt(request.getParameter("cantidad")) : 21;
+    }
+
+    private int obtenerTotalPaginas(int cantidad) {
+        LibroDAO libroDAO = new LibroDAO();
+        return libroDAO.cantidadPaginas(cantidad);
+    }
+
+    private void redirigirAPagina(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        request.getRequestDispatcher("/index.jsp").forward(request, response);
+    }
+
     /**
      * Handles the HTTP <code>GET</code> method.
      *
@@ -63,21 +87,35 @@ public class SvIndex extends HttpServlet {
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
         try {
-            PrestamoDAO prestamoDAO = new PrestamoDAO();
-            LibroDAO libroDAO = new LibroDAO();
+            int pagina = obtenerPagina(request);
+            int cantidad = obtenerCantidad(request);
 
-            List<Libro> libros = libroDAO.buscarTodos();
+            List<Libro> libros = obtenerLibrosPaginados(pagina, cantidad);
             request.setAttribute("libros", libros);
 
-            List<Libro> topLibros = prestamoDAO.buscarTop(3);
+            List<Libro> topLibros = obtenerTopLibros(3);
             request.setAttribute("topLibros", topLibros);
 
-            // Redirige a la página JSP
-            request.getRequestDispatcher("/index.jsp").forward(request, response);
+            int totalPaginas = obtenerTotalPaginas(cantidad);
+            request.setAttribute("totalPaginas", totalPaginas);
+
+            request.setAttribute("paginaActual", pagina);
+            request.setAttribute("cantidadPorPagina", cantidad);
+
+
+            redirigirAPagina(request, response);
+
         } catch (Exception e) {
             throw new ServletException(e);
         }
     }
+
+    private int obtenerPagina(HttpServletRequest request) {
+        return request.getParameter("pagina") != null ?
+                Integer.parseInt(request.getParameter("pagina")) : 1;
+    }
+
+
 
     /**
      * Handles the HTTP <code>POST</code> method.

@@ -60,6 +60,59 @@ public class LibroDAO implements LibroRepository {
         return libros;
     }
 
+    //obtener cantidad de paginas dispinibles
+    public int cantidadPaginas(int cantidad) {
+        int cantidadPaginas = 0;
+        try {
+            conn = con.getConectar();
+            ps = conn.prepareStatement("SELECT COUNT(*) FROM Libro");
+            rs = ps.executeQuery();
+
+            if (rs.next()) {
+                int totalLibros = rs.getInt(1);
+                cantidadPaginas = (int) Math.ceil((double) totalLibros / cantidad);
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        } finally {
+            // Cerrando
+            try {
+                if (rs != null) rs.close();
+                if (ps != null) ps.close();
+                if (conn != null) conn.close();
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
+        }
+        return cantidadPaginas;
+    }
+
+
+    public List<Libro> buscarPaginado(Integer pagina, Integer cantidad) {
+        List<Libro> libros = new ArrayList<>();
+        try {
+            conn = con.getConectar();
+            ps = conn.prepareStatement("SELECT * FROM Libro LIMIT ?, ?");
+            ps.setInt(1, (pagina - 1) * cantidad);
+            ps.setInt(2, cantidad);
+            rs = ps.executeQuery();
+            while (rs.next()) {
+                Libro libro = new Libro();
+                libro.setLibro_id(rs.getInt("libro_id"));
+                libro.setIsbn(rs.getString("isbn"));
+                libro.setTitulo(rs.getString("titulo"));
+                libro.setAutor_id(rs.getInt("autor_id"));
+                libro.setLink_imagen(rs.getString("link_imagen"));
+                libro.setDescripcion(rs.getString("descripcion"));
+                libro.setStock(rs.getInt("stock"));
+                libros.add(libro);
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return libros;
+    }
+
     @Override
     public Libro buscarUno(Integer integer) {
         Libro libro = new Libro();

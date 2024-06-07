@@ -84,13 +84,17 @@
 
         </section>
 
-        <section>
-            <h2 class="text-2xl font-bold mb-4">ULTIMOS LIBROS AGREGADOS</h2>
-            <div class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-5 lg:grid-cols-7 gap-4">
+        <%-- Supongamos que tienes una variable de sesión llamada "paginaActual" y otra llamada "cantidadPorPagina" --%>
+        <% Integer paginaActual = (Integer) session.getAttribute("paginaActual");
+           Integer cantidadPorPagina = (Integer) session.getAttribute("cantidadPorPagina");
+           Integer totalPaginas = (Integer) session.getAttribute("totalPaginas"); %>
 
+        <section>
+            <h2 class="text-2xl font-bold mb-4">ÚLTIMOS LIBROS AGREGADOS</h2>
+            <div class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-5 lg:grid-cols-7 gap-4">
                 <c:choose>
                     <c:when test="${empty libros}">
-                        <p>No se encontraron libros.</p>
+                        <p class="text-center">No se encontraron libros.</p>
                     </c:when>
                     <c:otherwise>
                         <c:forEach var="libro" items="${libros}">
@@ -101,8 +105,18 @@
                         </c:forEach>
                     </c:otherwise>
                 </c:choose>
-
+            </div>
+            <div class="pagination mt-4">
+                <c:if test="${paginaActual > 1}">
+                    <a href="<c:url value='/?accion=paginar&pagina=${paginaActual - 1}' />" class="text-blue-500 hover:underline">Anterior</a>
+                </c:if>
+                <span class="mx-2">Página ${paginaActual} de ${totalPaginas}</span>
+                <c:if test="${paginaActual < totalPaginas}">
+                    <a href="<c:url value='/?accion=paginar&pagina=${paginaActual + 1}' />" class="text-blue-500 hover:underline">Siguiente</a>
+                </c:if>
+            </div>
         </section>
+
     </main>
 </body>
 </html>
