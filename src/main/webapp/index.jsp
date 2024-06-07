@@ -16,53 +16,59 @@
         .bg-ocre-dark {
             background-color: #8B4513; /* Ocre oscuro */
         }
+        .text-ocre-dark {
+            color: #8B4513;
+        }
         .bg-crema-claro {
             background-color: #FFFDD0; /* Crema claro */
         }
     </style>
 </head>
 
-<body class="bg-white text-gray-800">
-    <header class="bg-crema-claro py-2">
-        <div class="container mx-auto flex justify-between items-center">
-            <div class="flex space-x-4">
-                <a href="#" class="text-sm">Quiénes somos</a>
-                <a href="#" class="text-sm">WhatsApp</a>
-            </div>
-            <a href="#" class="text-sm">Mi cuenta</a>
+<body class="bg-warmGray-100 text-warmGray-800 antialiased">
+<header class="bg-crema-claro py-2 shadow-sm">
+    <div class="container mx-auto flex justify-between items-center px-6">
+        <div class="flex space-x-4">
+            <a href="#" class="text-sm font-bold text-ocre-dark">Quiénes somos</a>
+            <!--
+             <a href="#" class="text-sm font-bold text-ocre-dark">WhatsApp</a>
+             -->
+
         </div>
-    </header>
-    <div class="bg-white py-4">
-        <div class="container mx-auto flex flex-col sm:flex-row justify-between items-center">
-            <img src="https://placehold.co/150x50" alt="El Virrey Librería Logo" class="h-12 mb-4 sm:mb-0">
-            <div class="relative w-full sm:w-1/2">
-                <input type="text" placeholder="Título, Autor o ISBN" class="w-full border border-gray-300 rounded-full py-2 px-4">
-                <button class="absolute right-4 top-1/2 transform -translate-y-1/2 text-brown-700">
-                    <i class="fas fa-search"></i>
-                </button>
-            </div>
+        <a href="#" class="text-sm font-bold text-ocre-dark">Mi cuenta</a>
+    </div>
+</header>
+<div class="bg-white shadow py-4">
+    <div class="container mx-auto flex flex-col sm:flex-row justify-between items-center px-6">
+        <img src="https://placehold.co/150x50" alt="El Virrey Librería Logo" class="h-12 mb-4 sm:mb-0">
+        <div class="relative w-full sm:w-1/2 mt-2 sm:mt-0">
+            <input type="text" placeholder="Título, Autor o ISBN" class="w-full border border-gray-300 rounded-full py-2 pl-4 pr-10 text-warmGray-800">
+            <button class="absolute right-4 top-1/2 transform -translate-y-1/2 text-warmGray-800">
+                <i class="fas fa-search"></i>
+            </button>
         </div>
     </div>
+</div>
 
-    <div class="bg-ocre-dark py-2 px-4">
-        <div class="container mx-auto flex flex-col md:flex-row justify-between items-center space-y-4 md:space-y-0">
-            <div class="flex space-x-4">
-                <a href="#" class="text-white">Libros</a>
-                <a href="#" class="text-white">Donaciones</a>
-            </div>
+<div class="bg-crema-claro py-2 px-4 shadow text-ocre-dark">
+    <div class="container mx-auto flex flex-col md:flex-row justify-between items-center space-y-4 md:space-y-0 px-6">
+        <div class="flex space-x-4 font-semibold">
+            <a href="#" class="text-sm">Libros</a>
+            <a href="#" class="text-sm">Donaciones</a>
+        </div>
 
-            <div class="flex space-x-4 text-white">
-                <a href="#"><i class="fab fa-facebook-f"></i></a>
-                <a href="#"><i class="fab fa-twitter"></i></a>
-                <a href="#"><i class="fab fa-instagram"></i></a>
-                <a href="#"><i class="fab fa-youtube"></i></a>
-                <a href="#"><i class="fab fa-whatsapp"></i></a>
-            </div>
+        <div class="flex space-x-4">
+            <a href="#"><i class="fab fa-facebook-f text-ocre-dark"></i></a>
+            <a href="#"><i class="fab fa-twitter text-ocre-dark"></i></a>
+            <a href="#"><i class="fab fa-instagram text-ocre-dark"></i></a>
+            <a href="#"><i class="fab fa-youtube text-ocre-dark"></i></a>
+            <a href="#"><i class="fab fa-whatsapp text-ocre-dark"></i></a>
         </div>
     </div>
+</div>
 
-    <nav class="bg-brown-700 py-2">
-    </nav>
+<nav class="bg-ocre-dark py-2 text-white">
+</nav>
 
     <main class="container mx-auto py-8">
         <section class="mb-12">
@@ -85,7 +91,6 @@
 
         </section>
 
-        <%-- Supongamos que tienes una variable de sesión llamada "paginaActual" y otra llamada "cantidadPorPagina" --%>
         <% Integer paginaActual = (Integer) session.getAttribute("paginaActual");
            Integer cantidadPorPagina = (Integer) session.getAttribute("cantidadPorPagina");
            Integer totalPaginas = (Integer) session.getAttribute("totalPaginas"); %>
