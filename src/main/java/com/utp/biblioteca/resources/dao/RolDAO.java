@@ -2,13 +2,13 @@ package com.utp.biblioteca.resources.dao;
 
 import com.utp.biblioteca.resources.configuracion.Conexion;
 import com.utp.biblioteca.resources.modelo.Rol;
-import com.utp.biblioteca.resources.repositorio.RolRepository;
+import com.utp.biblioteca.resources.services.RolService;
 
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
 
-public class RolDAO implements RolRepository {
+public class RolDAO implements RolService {
 
     Conexion con;
     Connection conn;

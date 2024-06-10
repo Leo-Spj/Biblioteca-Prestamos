@@ -2,13 +2,13 @@ package com.utp.biblioteca.resources.dao;
 
 import com.utp.biblioteca.resources.configuracion.Conexion;
 import com.utp.biblioteca.resources.modelo.Usuario;
-import com.utp.biblioteca.resources.repositorio.UsuarioRepository;
+import com.utp.biblioteca.resources.services.UsuarioService;
 
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
 
-public class UsuarioDAO implements UsuarioRepository {
+public class UsuarioDAO implements UsuarioService {
 
     Conexion con;
     Connection conn;

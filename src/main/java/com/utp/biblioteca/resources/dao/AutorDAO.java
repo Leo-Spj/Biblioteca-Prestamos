@@ -4,13 +4,13 @@ import java.sql.PreparedStatement;
 
 import com.utp.biblioteca.resources.configuracion.Conexion;
 import com.utp.biblioteca.resources.modelo.Autor;
-import com.utp.biblioteca.resources.repositorio.AutorRepository;
+import com.utp.biblioteca.resources.services.AutorService;
 
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
 
-public class AutorDAO implements AutorRepository {
+public class AutorDAO implements AutorService {
 
     Conexion con;
     Connection conn;
@@ -19,6 +19,30 @@ public class AutorDAO implements AutorRepository {
 
     public AutorDAO() {
         con = new Conexion();
+    }
+
+    private void closeResources() {
+        if (rs != null) {
+            try {
+                rs.close();
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
+        }
+        if (ps != null) {
+            try {
+                ps.close();
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
+        }
+        if (conn != null) {
+            try {
+                conn.close();
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
+        }
     }
 
     @Override
@@ -30,6 +54,8 @@ public class AutorDAO implements AutorRepository {
             ps.executeUpdate();
         } catch (SQLException e) {
             e.printStackTrace();
+        } finally {
+            closeResources();
         }
     }
 
@@ -48,6 +74,8 @@ public class AutorDAO implements AutorRepository {
             }
         } catch (SQLException e) {
             e.printStackTrace();
+        } finally {
+            closeResources();
         }
         return autores;
     }
@@ -66,6 +94,8 @@ public class AutorDAO implements AutorRepository {
             }
         } catch (SQLException e) {
             e.printStackTrace();
+        } finally {
+            closeResources();
         }
         return autor;
     }
@@ -106,6 +136,8 @@ public class AutorDAO implements AutorRepository {
             existe = rs.next();
         } catch (SQLException e) {
             e.printStackTrace();
+        } finally {
+            closeResources();
         }
         return existe;
     }

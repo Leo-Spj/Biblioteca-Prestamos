@@ -1,4 +1,4 @@
-package com.utp.biblioteca.resources.repositorio;
+package com.utp.biblioteca.resources.services;
 
 import java.util.List;
 
@@ -6,7 +6,7 @@ import java.util.List;
  * @param <T>  el tipo de la entidad que maneja este repositorio
  * @param <ID> el tipo del identificador único de la entidad
  */
-public interface CrudRepository <T, ID> {
+public interface CrudService<T, ID> {
 
     void crear(T entidad);
     List<T> buscarTodos();

@@ -3,13 +3,13 @@ package com.utp.biblioteca.resources.dao;
 import com.utp.biblioteca.resources.configuracion.Conexion;
 import com.utp.biblioteca.resources.modelo.Autor;
 import com.utp.biblioteca.resources.modelo.Libro;
-import com.utp.biblioteca.resources.repositorio.LibroRepository;
+import com.utp.biblioteca.resources.services.LibroService;
 
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
 
-public class LibroDAO implements LibroRepository {
+public class LibroDAO implements LibroService {
 
     Conexion con;
     Connection conn;
@@ -18,6 +18,30 @@ public class LibroDAO implements LibroRepository {
 
     public LibroDAO() {
         con = new Conexion();
+    }
+
+    private void closeResources() {
+        if (rs != null) {
+            try {
+                rs.close();
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
+        }
+        if (ps != null) {
+            try {
+                ps.close();
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
+        }
+        if (conn != null) {
+            try {
+                conn.close();
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
+        }
     }
 
     @Override
@@ -60,6 +84,8 @@ public class LibroDAO implements LibroRepository {
             }
         } catch (SQLException e) {
             e.printStackTrace();
+        } finally {
+            closeResources();
         }
         return libros;
     }
@@ -79,14 +105,7 @@ public class LibroDAO implements LibroRepository {
         } catch (SQLException e) {
             e.printStackTrace();
         } finally {
-            // Cerrando
-            try {
-                if (rs != null) rs.close();
-                if (ps != null) ps.close();
-                if (conn != null) conn.close();
-            } catch (SQLException e) {
-                e.printStackTrace();
-            }
+            closeResources();
         }
         return cantidadPaginas;
     }
@@ -116,6 +135,8 @@ public class LibroDAO implements LibroRepository {
             }
         } catch (SQLException e) {
             e.printStackTrace();
+        } finally {
+            closeResources();
         }
         return libros;
     }
@@ -142,6 +163,8 @@ public class LibroDAO implements LibroRepository {
             }
         } catch (SQLException e) {
             e.printStackTrace();
+        } finally {
+            closeResources();
         }
         return libro;
     }
@@ -187,6 +210,8 @@ public class LibroDAO implements LibroRepository {
             existe = rs.next();
         } catch (SQLException e) {
             e.printStackTrace();
+        } finally {
+            closeResources();
         }
         return existe;
     }

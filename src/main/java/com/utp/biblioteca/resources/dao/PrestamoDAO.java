@@ -3,13 +3,13 @@ package com.utp.biblioteca.resources.dao;
 import com.utp.biblioteca.resources.configuracion.Conexion;
 import com.utp.biblioteca.resources.modelo.Libro;
 import com.utp.biblioteca.resources.modelo.Prestamo;
-import com.utp.biblioteca.resources.repositorio.PrestamoRepository;
+import com.utp.biblioteca.resources.services.PrestamoService;
 
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
 
-public class PrestamoDAO implements PrestamoRepository {
+public class PrestamoDAO implements PrestamoService {
 
     Conexion con;
     Connection conn;
