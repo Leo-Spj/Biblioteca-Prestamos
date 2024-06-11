@@ -1,17 +1,17 @@
 package dao;
 
-import com.utp.biblioteca.resources.dao.impl.UsuarioDaoImpl;
+import com.utp.biblioteca.resources.dao.UsuarioDao;
 import com.utp.biblioteca.resources.modelo.Usuario;
 import org.junit.jupiter.api.Test;
 
 import java.util.List;
 
-public class UsuarioDaoImplTest {
+public class UsuarioDaoTest {
 
     @Test
     public void testBuscarTodos() {
-        UsuarioDaoImpl usuarioDaoImpl = new UsuarioDaoImpl();
-        List<Usuario> usuarios = usuarioDaoImpl.buscarTodos();
+        UsuarioDao usuarioDao = new UsuarioDao();
+        List<Usuario> usuarios = usuarioDao.buscarTodos();
 
         if (!usuarios.isEmpty()) {
             for (Usuario usuario : usuarios) {

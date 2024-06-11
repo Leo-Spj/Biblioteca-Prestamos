@@ -1,18 +1,18 @@
 package dao;
 
-import com.utp.biblioteca.resources.dao.impl.LibroDaoImpl;
+import com.utp.biblioteca.resources.dao.LibroDao;
 import com.utp.biblioteca.resources.modelo.Libro;
 import org.junit.jupiter.api.Test;
 
 import java.util.List;
 
-public class LibroDaoImplTest {
+public class LibroDaoTest {
 
 
     @Test
     public void testBuscarTodosLibros() {
-        LibroDaoImpl libroDaoImpl = new LibroDaoImpl();
-        List<Libro> libros = libroDaoImpl.buscarTodos();
+        LibroDao libroDao = new LibroDao();
+        List<Libro> libros = libroDao.buscarTodos();
 
         if (!libros.isEmpty()) {
             for (Libro libro : libros) {
