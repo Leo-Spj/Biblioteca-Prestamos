@@ -1,4 +1,4 @@
-package com.utp.biblioteca.resources.dao;
+package com.utp.biblioteca.resources.dao.sp;
 
 import com.utp.biblioteca.resources.configuracion.Conexion;
 
@@ -7,14 +7,14 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
-public class StoredProcedureDAO {
+public class StoredProcedureRepository {
 
     Conexion con;
     Connection conn;
     PreparedStatement ps;
     ResultSet rs;
 
-    public StoredProcedureDAO() {
+    public StoredProcedureRepository() {
         con = new Conexion();
     }
 

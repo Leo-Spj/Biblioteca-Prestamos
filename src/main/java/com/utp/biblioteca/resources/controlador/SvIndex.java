@@ -6,12 +6,10 @@ package com.utp.biblioteca.resources.controlador;
 
 import java.io.IOException;
 import java.io.PrintWriter;
-import java.sql.PreparedStatement;
-import java.util.ArrayList;
 import java.util.List;
 
-import com.utp.biblioteca.resources.dao.LibroDAO;
-import com.utp.biblioteca.resources.dao.PrestamoDAO;
+import com.utp.biblioteca.resources.dao.impl.LibroDaoImpl;
+import com.utp.biblioteca.resources.dao.impl.PrestamoDaoImpl;
 import com.utp.biblioteca.resources.modelo.Libro;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;
@@ -51,13 +49,13 @@ public class SvIndex extends HttpServlet {
 
 
     private List<Libro> obtenerLibrosPaginados(int pagina, int cantidad) {
-        LibroDAO libroDAO = new LibroDAO();
-        return libroDAO.buscarPaginado(pagina, cantidad);
+        LibroDaoImpl libroDaoImpl = new LibroDaoImpl();
+        return libroDaoImpl.buscarPaginado(pagina, cantidad);
     }
 
     private List<Libro> obtenerTopLibros(int cantidad) {
-        PrestamoDAO prestamoDAO = new PrestamoDAO();
-        return prestamoDAO.buscarTop(cantidad);
+        PrestamoDaoImpl prestamoDaoImpl = new PrestamoDaoImpl();
+        return prestamoDaoImpl.buscarTop(cantidad);
     }
 
     private int obtenerCantidad(HttpServletRequest request) {
@@ -66,8 +64,8 @@ public class SvIndex extends HttpServlet {
     }
 
     private int obtenerTotalPaginas(int cantidad) {
-        LibroDAO libroDAO = new LibroDAO();
-        return libroDAO.cantidadPaginas(cantidad);
+        LibroDaoImpl libroDaoImpl = new LibroDaoImpl();
+        return libroDaoImpl.cantidadPaginas(cantidad);
     }
 
     private void redirigirAPagina(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
