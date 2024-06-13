@@ -47,6 +47,10 @@ public class SvIndex extends HttpServlet {
         }
     }
 
+    private int obtenerPagina(HttpServletRequest request) {
+        return request.getParameter("pagina") != null ?
+                Integer.parseInt(request.getParameter("pagina")) : 1; // Si no se envía el parámetro, se asume la página 1
+    }
 
     private List<Libro> obtenerLibrosPaginados(int pagina, int cantidad) {
         LibroDao libroDao = new LibroDao();
@@ -107,12 +111,6 @@ public class SvIndex extends HttpServlet {
             throw new ServletException(e);
         }
     }
-
-    private int obtenerPagina(HttpServletRequest request) {
-        return request.getParameter("pagina") != null ?
-                Integer.parseInt(request.getParameter("pagina")) : 1;
-    }
-
 
 
     /**
