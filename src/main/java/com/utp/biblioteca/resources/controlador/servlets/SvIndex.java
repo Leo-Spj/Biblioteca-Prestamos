@@ -2,14 +2,14 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/JSP_Servlet/Servlet.java to edit this template
  */
-package com.utp.biblioteca.resources.controlador;
+package com.utp.biblioteca.resources.controlador.servlets;
 
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.List;
 
-import com.utp.biblioteca.resources.dao.LibroDao;
-import com.utp.biblioteca.resources.dao.PrestamoDao;
+import com.utp.biblioteca.resources.modelo.dao.LibroDao;
+import com.utp.biblioteca.resources.modelo.dao.PrestamoDao;
 import com.utp.biblioteca.resources.modelo.Libro;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;

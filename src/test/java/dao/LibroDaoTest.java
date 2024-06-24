@@ -1,6 +1,6 @@
 package dao;
 
-import com.utp.biblioteca.resources.dao.LibroDao;
+import com.utp.biblioteca.resources.modelo.dao.LibroDao;
 import com.utp.biblioteca.resources.modelo.Libro;
 import org.junit.jupiter.api.Test;
 

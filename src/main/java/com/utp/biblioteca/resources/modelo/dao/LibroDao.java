@@ -1,4 +1,4 @@
-package com.utp.biblioteca.resources.dao;
+package com.utp.biblioteca.resources.modelo.dao;
 
 import com.utp.biblioteca.resources.configuracion.Conexion;
 import com.utp.biblioteca.resources.modelo.Autor;

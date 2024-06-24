@@ -1,4 +1,4 @@
-package com.utp.biblioteca.resources.dao.sp;
+package com.utp.biblioteca.resources.modelo.dao.sp;
 
 import com.utp.biblioteca.resources.configuracion.Conexion;
 
