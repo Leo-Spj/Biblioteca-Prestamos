@@ -1,9 +1,6 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" import="java.util.*, com.utp.biblioteca.resources.modelo.* "%>
-<%
-    List<Libro> topLibros = (List<Libro>) request.getAttribute("topLibros");
-    
-%>
+
 <html lang="es">
 
 <head>
@@ -59,7 +56,7 @@
 <div class="bg-crema-claro py-2 px-4 shadow text-ocre-dark">
     <div class="container mx-auto flex flex-col md:flex-row justify-between items-center space-y-4 md:space-y-0 px-6">
         <div class="flex space-x-4 font-semibold">
-            <a href="<c:url value='/libros/' />" class="text-sm">Libros</a>
+            <a href="#" class="text-sm">Libros</a>
             <a href="#" class="text-sm">Donaciones</a>
         </div>
 
@@ -78,34 +75,37 @@
 
     <main class="container mx-auto py-8">
 
-        <h2 class="mt-4 ml-2 text-2xl font-bold mb-4 col-span-2">Acerca de Nosotros</h2>
-        <section class="mb-12 grid grid-cols-1 sm:grid-cols-2 gap-2 justify-items-center align-items-center">
-            <div class="mx-2 text-lg bg-ocre-dark text-white p-4 rounded">
-                Somos una biblioteca comprometida con la difusión de la cultura y el conocimiento. Creemos firmemente en el poder de la educación y el acceso a la información como herramientas para el desarrollo personal y social. Por eso, ofrecemos préstamos de libros de manera gratuita.
+        <% Integer paginaActual = (Integer) session.getAttribute("paginaActual");
+            Integer cantidadPorPagina = (Integer) session.getAttribute("cantidadPorPagina");
+            Integer totalPaginas = (Integer) session.getAttribute("totalPaginas"); %>
+
+        <section>
+            <h2 class="ml-2 text-2xl font-bold mb-4">REPERTORIO DE LIBROS</h2>
+            <div class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-5 lg:grid-cols-7 gap-4">
+                <c:choose>
+                    <c:when test="${empty libros}">
+                        <p class="text-center">No se encontraron libros.</p>
+                    </c:when>
+                    <c:otherwise>
+                        <c:forEach var="libro" items="${libros}">
+                            <div class="text-center">
+                                <img src="${libro.link_imagen}" alt="Portada de ${libro.titulo}" class="mx-auto mb-2">
+                                <p class="font-bold">${libro.titulo}</p>
+                                <p class="text-xs">${libro.autor.nombre}</p>
+                            </div>
+                        </c:forEach>
+                    </c:otherwise>
+                </c:choose>
             </div>
-            <div class="mx-2 text-lg bg-ocre-dark text-white p-4 rounded">
-                Nuestra misión es fomentar la lectura y el aprendizaje, proporcionando un espacio seguro y acogedor para todos. Nos enorgullece ser parte de la comunidad y agradecemos a nuestros usuarios por sus donaciones y apoyo continuo.
+            <div class="pagination mt-4 flex justify-center items-center">
+                <c:if test="${paginaActual > 1}">
+                    <a href="<c:url value='/libros/?accion=paginar&pagina=${paginaActual - 1}' />" class="text-blue-500 hover:underline">Anterior</a>
+                </c:if>
+                <span class="mx-2">Página ${paginaActual} de ${totalPaginas}</span>
+                <c:if test="${paginaActual < totalPaginas}">
+                    <a href="<c:url value='/libros/?accion=paginar&pagina=${paginaActual + 1}' />" class="text-blue-500 hover:underline">Siguiente</a>
+                </c:if>
             </div>
-        </section>
-
-        <section class="mb-12">
-            <h2 class="ml-2 text-2xl font-bold mb-4">LIBROS MÁS SOLICITADOS DEL MES!</h2>
-
-            <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 justify-items-center align-items-center">
-
-                <c:forEach var="libro" items="${topLibros}">
-                    <div class="bg-crema-claro p-4 rounded-lg max-w-md flex flex-col sm:flex-row items-center">
-                        <div class="text-center sm:text-left">
-                            <p class="text-xs">${libro.autor.nombre}</p>
-                            <h3 class="font-bold">${libro.titulo}</h3>
-                            <p>${libro.descripcion}</p>
-                        </div>
-                        <img src="${libro.link_imagen}" alt="Portada de ${libro.titulo}" class="mt-4 sm:mt-0 sm:ml-4">
-                    </div>
-                </c:forEach>
-
-            </div>
-
         </section>
 
 
