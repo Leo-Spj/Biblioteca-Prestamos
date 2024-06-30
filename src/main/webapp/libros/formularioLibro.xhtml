@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+        "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
+<h:head>
+    <title>Formulario Libro</title>
+</h:head>
+
+<body>
+    <f:view>
+        <h:form id="libroForm">
+            <h:panelGrid columns="2">
+
+                <h:outputLabel value="ISBN:" for="isbn" />
+                <h:inputText id="isbn" value="#{libroBean.libro.isbn}" required="true" />
+
+                <h:outputLabel value="Titulo:" for="titulo" />
+                <h:inputText id="titulo" value="#{libroBean.libro.titulo}" required="true" />
+
+                <h:outputLabel value="Autor:" for="autor" />
+                <h:selectOneMenu id="autor" value="#{libroBean.autorId}" required="true">
+                    <f:selectItems value="#{libroBean.autores}" var="autor" itemValue="#{autor.autor_id}" itemLabel="#{autor.nombre}" />
+                </h:selectOneMenu>
+
+                <h:outputLabel value="Link Imagen:" for="link_imagen" />
+                <h:inputText id="link_imagen" value="#{libroBean.libro.link_imagen}" required="true" />
+
+                <h:outputLabel value="Descripcion:" for="descripcion" />
+                <h:inputTextarea id="descripcion" value="#{libroBean.libro.descripcion}" required="true" />
+
+                <h:outputLabel value="Stock:" for="stock" />
+                <h:inputText id="stock" value="#{libroBean.libro.stock}" required="true" />
+            </h:panelGrid>
+
+            <h:commandButton value="Submit" action="#{libroBean.submit}" />
+        </h:form>
+
+    </f:view>
+</body>
+</html>
