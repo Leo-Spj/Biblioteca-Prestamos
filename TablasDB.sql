@@ -89,7 +89,7 @@ CREATE TRIGGER tr_set_default_image
 BEFORE INSERT ON Libro
 FOR EACH ROW
 BEGIN
-IF NEW.link_imagen IS NULL THEN
+IF NEW.link_imagen IS NULL OR NEW.link_imagen = '' THEN
 SET NEW.link_imagen = CONCAT('https://placehold.co/100x150/orange/white?text=', REPLACE(NEW.titulo, ' ', '%5Cn'));
 END IF;
 END;
@@ -157,7 +157,7 @@ INSERT INTO Libro (isbn, titulo, autor_id,link_imagen ,descripcion, stock) VALUE
 ('5036265268', 'Residencia en la tierra', 9, 'https://i.postimg.cc/MGX77P7p/56-Residencia-en-la-tierra.jpg', 'Serie de poemas que exploran la alienación y el absurdo de la existencia humana.', 1),
 ('6626438257', 'Memorial de Isla Negra', 9, 'https://i.postimg.cc/yN5FvmjX/57-Memorial-de-Isla-Negra.jpg', 'Poemario autobiográfico que recorre la vida del poeta y su relación con Chile.', 1);
 
-INSERT INTO prestamo (usuario_id, libro_id, fecha_prestamo, fecha_limite, fecha_devolucion, devuelto) VALUES
+INSERT INTO Prestamo (usuario_id, libro_id, fecha_prestamo, fecha_limite, fecha_devolucion, devuelto) VALUES
 (2, 7, '2021-09-01', '2021-09-15', '2021-09-15', TRUE),
 (3, 48, '2021-09-01', '2021-09-15', '2021-09-15', TRUE),
 (4, 39, '2021-09-01', '2021-09-15', '2021-09-15', TRUE);

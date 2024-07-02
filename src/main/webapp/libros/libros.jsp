@@ -79,6 +79,7 @@
             Integer cantidadPorPagina = (Integer) session.getAttribute("cantidadPorPagina");
             Integer totalPaginas = (Integer) session.getAttribute("totalPaginas"); %>
 
+        <img src="/resources/images/loading.png" alt="Portada de" class="mx-auto mb-2" id="imagenLibro">
         <section>
             <h2 class="ml-2 text-2xl font-bold mb-4">REPERTORIO DE LIBROS</h2>
             <div class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-5 lg:grid-cols-7 gap-4">
@@ -87,13 +88,25 @@
                         <p class="text-center">No se encontraron libros.</p>
                     </c:when>
                     <c:otherwise>
-                        <c:forEach var="libro" items="${libros}">
+
+
+
+                        <c:forEach var="libro" items="${libros}" varStatus="loop">
                             <div class="text-center">
-                                <img src="${libro.link_imagen}" alt="Portada de ${libro.titulo}" class="mx-auto mb-2">
+                                <img src="/resources/images/loading.png" alt="Portada de ${libro.titulo}" class="mx-auto mb-2" id="imagenLibro${loop.index}">
                                 <p class="font-bold">${libro.titulo}</p>
                                 <p class="text-xs">${libro.autor.nombre}</p>
+                                <script>
+                                    var imagenReal = new Image();
+                                    imagenReal.src = "${libro.link_imagen}";
+                                    imagenReal.onload = function() {
+                                        document.getElementById('imagenLibro${loop.index}').src = imagenReal.src;
+                                    };
+                                </script>
                             </div>
                         </c:forEach>
+
+
                     </c:otherwise>
                 </c:choose>
             </div>
