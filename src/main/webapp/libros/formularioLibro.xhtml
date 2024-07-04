@@ -7,37 +7,112 @@
       xmlns:f="http://xmlns.jcp.org/jsf/core">
 <h:head>
     <title>Formulario Libro</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css" />
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&amp;display=swap" rel="stylesheet" />
+    <style>
+        body {
+            font-family: 'Roboto', sans-serif;
+        }
+        .bg-ocre-dark {
+            background-color: #8B4513; /* Ocre oscuro */
+        }
+        .text-ocre-dark {
+            color: #8B4513;
+        }
+        .bg-crema-claro {
+            background-color: #FFFDD0; /* Crema claro */
+        }
+    </style>
 </h:head>
 
-<body>
+<h:body class="bg-gray-100 text-gray-800 antialiased min-h-screen flex flex-col">
+    <header class="bg-crema-claro py-2 shadow-sm w-full">
+        <div class="container mx-auto flex justify-between items-center px-6">
+            <div class="flex space-x-4">
+                <a href="#" class="text-sm font-bold text-ocre-dark">Quiénes somos</a>
+            </div>
+            <a href="#" class="text-sm font-bold text-ocre-dark">Soy Bibliotecario</a>
+        </div>
+    </header>
+    <div class="bg-white shadow py-4 w-full">
+        <div class="container mx-auto flex flex-col sm:flex-row justify-between items-center px-6">
+            <a href="#">
+                <img src="https://placehold.co/150x50" alt="La Librería Logo" class="h-12 mb-4 sm:mb-0" />
+            </a>
+            <div class="relative w-full sm:w-1/2 mt-2 sm:mt-0">
+                <input type="text" placeholder="Título, Autor o ISBN" class="w-full border border-gray-300 rounded-full py-2 pl-4 pr-10 text-warmGray-800" />
+                <button class="absolute right-4 top-1/2 transform -translate-y-1/2 text-warmGray-800">
+                    <i class="fas fa-search"></i>
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <div class="bg-crema-claro py-2 px-4 shadow text-ocre-dark w-full">
+        <div class="container mx-auto flex flex-col md:flex-row justify-between items-center space-y-4 md:space-y-0 px-6">
+            <div class="flex space-x-4 font-semibold">
+                <a href="#" class="text-sm">Libros</a>
+                <a href="#" class="text-sm">Donaciones</a>
+            </div>
+
+            <div class="flex space-x-4">
+                <a href="#"><i class="fab fa-facebook-f text-ocre-dark"></i></a>
+                <a href="#"><i class="fab fa-twitter text-ocre-dark"></i></a>
+                <a href="#"><i class="fab fa-instagram text-ocre-dark"></i></a>
+                <a href="#"><i class="fab fa-youtube text-ocre-dark"></i></a>
+                <a href="#"><i class="fab fa-whatsapp text-ocre-dark"></i></a>
+            </div>
+        </div>
+    </div>
+    <br />
+    <br />
+
     <f:view>
-        <h:form id="libroForm">
-            <h:panelGrid columns="2">
+        <div class="flex flex-grow items-center justify-center">
+            <div class="w-full max-w-xl bg-white shadow-lg rounded-lg overflow-hidden">
+                <div class="bg-ocre-dark px-6 py-4">
+                    <h1 class="text-2xl font-bold text-white">Registro de Libros</h1>
+                </div>
+                <h:form id="libroForm" class="p-6 space-y-4">
+                    <div>
+                        <h:outputLabel value="ISBN:" for="isbn" styleClass="block text-sm font-medium text-gray-700" />
+                        <h:inputText id="isbn" value="#{libroBean.libro.isbn}" required="true" styleClass="border border-gray-300 rounded-md shadow-sm mt-1 p-2 w-full" />
+                    </div>
 
-                <h:outputLabel value="ISBN:" for="isbn" />
-                <h:inputText id="isbn" value="#{libroBean.libro.isbn}" required="true" />
+                    <div>
+                        <h:outputLabel value="Titulo:" for="titulo" styleClass="block text-sm font-medium text-gray-700" />
+                        <h:inputText id="titulo" value="#{libroBean.libro.titulo}" required="true" styleClass="border border-gray-300 rounded-md shadow-sm mt-1 p-2 w-full" />
+                    </div>
 
-                <h:outputLabel value="Titulo:" for="titulo" />
-                <h:inputText id="titulo" value="#{libroBean.libro.titulo}" required="true" />
+                    <div>
+                        <h:outputLabel value="Autor:" for="autor" styleClass="block text-sm font-medium text-gray-700" />
+                        <h:selectOneMenu id="autor" value="#{libroBean.autorId}" required="true" styleClass="border border-gray-300 rounded-md shadow-sm mt-1 p-2 w-full">
+                            <f:selectItems value="#{libroBean.autores}" var="autor" itemValue="#{autor.autor_id}" itemLabel="#{autor.nombre}" />
+                        </h:selectOneMenu>
+                    </div>
 
-                <h:outputLabel value="Autor:" for="autor" />
-                <h:selectOneMenu id="autor" value="#{libroBean.autorId}" required="true">
-                    <f:selectItems value="#{libroBean.autores}" var="autor" itemValue="#{autor.autor_id}" itemLabel="#{autor.nombre}" />
-                </h:selectOneMenu>
+                    <div>
+                        <h:outputLabel value="Link Imagen:" for="link_imagen" styleClass="block text-sm font-medium text-gray-700" />
+                        <h:inputText id="link_imagen" value="#{libroBean.libro.link_imagen}" required="false" styleClass="border border-gray-300 rounded-md shadow-sm mt-1 p-2 w-full" />
+                    </div>
 
-                <h:outputLabel value="Link Imagen:" for="link_imagen" />
-                <h:inputText id="link_imagen" value="#{libroBean.libro.link_imagen}" required="false" />
+                    <div>
+                        <h:outputLabel value="Descripcion:" for="descripcion" styleClass="block text-sm font-medium text-gray-700" />
+                        <h:inputTextarea id="descripcion" value="#{libroBean.libro.descripcion}" required="true" styleClass="border border-gray-300 rounded-md shadow-sm mt-1 p-2 w-full" />
+                    </div>
 
-                <h:outputLabel value="Descripcion:" for="descripcion" />
-                <h:inputTextarea id="descripcion" value="#{libroBean.libro.descripcion}" required="true" />
+                    <div>
+                        <h:outputLabel value="Stock:" for="stock" styleClass="block text-sm font-medium text-gray-700" />
+                        <h:inputText id="stock" value="#{libroBean.libro.stock}" required="true" styleClass="border border-gray-300 rounded-md shadow-sm mt-1 p-2 w-full" />
+                    </div>
 
-                <h:outputLabel value="Stock:" for="stock" />
-                <h:inputText id="stock" value="#{libroBean.libro.stock}" required="true" />
-            </h:panelGrid>
-
-            <h:commandButton value="Submit" action="#{libroBean.submit}" />
-        </h:form>
-
+                    <div class="flex justify-end mt-4">
+                        <h:commandButton value="Submit" action="#{libroBean.submit}" styleClass="bg-ocre-dark text-white font-bold py-2 px-4 rounded hover:bg-ocre-dark/90" />
+                    </div>
+                </h:form>
+            </div>
+        </div>
     </f:view>
-</body>
+</h:body>
 </html>
