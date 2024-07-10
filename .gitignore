@@ -1,4 +1,4 @@
-*.properties
+db.properties
 .idea/dataSources.xml
 
 # Created by https://www.toptal.com/developers/gitignore/api/java,intellij,netbeans,maven
