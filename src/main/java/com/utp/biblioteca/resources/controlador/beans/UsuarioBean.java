@@ -29,6 +29,7 @@ public class UsuarioBean implements Serializable {
     private int rolId;
 
     public UsuarioBean() {
+        usuario.setEstado(true);
     }
 
     public List<Rol> getRoles() {

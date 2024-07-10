@@ -10,7 +10,7 @@
     <script src="https://cdn.tailwindcss.com"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css" />
     <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&amp;display=swap" rel="stylesheet" />
-    <style>
+    <style type="text/css">
         body {
             font-family: 'Roboto', sans-serif;
         }
@@ -26,14 +26,14 @@
     </style>
 </h:head>
 <h:body class="bg-gray-100 text-gray-800 antialiased min-h-screen flex flex-col">
-    <header class="bg-crema-claro py-2 shadow-sm w-full">
+    <h:header class="bg-crema-claro py-2 shadow-sm w-full">
         <div class="container mx-auto flex justify-between items-center px-6">
             <div class="flex space-x-4">
                 <a href="#" class="text-sm font-bold text-ocre-dark">Quiénes somos</a>
             </div>
             <a href="#" class="text-sm font-bold text-ocre-dark">Soy Bibliotecario</a>
         </div>
-    </header>
+    </h:header>
     <div class="bg-white shadow py-4 w-full">
         <div class="container mx-auto flex flex-col sm:flex-row justify-between items-center px-6">
             <a href="#">
@@ -104,11 +104,6 @@
                         <h:selectOneMenu id="rol" value="#{usuarioBean.rolId}" required="true" styleClass="border border-gray-300 rounded-md shadow-sm mt-1 p-2 w-full">
                             <f:selectItems value="#{usuarioBean.roles}" var="rol" itemValue="#{rol.rol_id}" itemLabel="#{rol.nombre}" />
                         </h:selectOneMenu>
-                    </div>
-
-                    <div>
-                        <h:outputLabel value="Estado:" for="estado" styleClass="block text-sm font-medium text-gray-700" />
-                        <h:selectBooleanCheckbox id="estado" value="#{usuarioBean.usuario.estado}" required="true" styleClass="border border-gray-300 rounded-md shadow-sm mt-1 p-2 w-full" />
                     </div>
 
                     <div class="flex justify-end mt-4">
