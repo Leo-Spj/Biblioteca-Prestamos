@@ -4,7 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Librería Préstamos</title>
+    <title>Librería Devoluciones</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
     <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap" rel="stylesheet">
@@ -28,10 +28,10 @@
     <div class="bg-white shadow-md rounded-lg p-6">
         <div class="flex justify-between mb-4">
             <div>
-                <h2 class="text-2xl font-bold">Préstamos</h2>
+                <h2 class="text-2xl font-bold">Devoluciones</h2>
             </div>
             <div class="flex space-x-4">
-                <a href="devoluciones.html" class="bg-ocre text-white px-4 py-2 rounded hover:bg-ocre-dark">Devoluciones</a>
+                <a href="prestamos.html" class="bg-ocre text-white px-4 py-2 rounded hover:bg-ocre-dark">Préstamos</a>
                 <button class="bg-ocre text-white px-4 py-2 rounded hover:bg-ocre-dark">Registrar Usuario</button>
             </div>
         </div>
@@ -53,7 +53,8 @@
                         <th class="py-2 px-4 border-b">ISBN</th>
                         <th class="py-2 px-4 border-b">Título</th>
                         <th class="py-2 px-4 border-b">Autor</th>
-                        <th class="py-2 px-4 border-b">Stock</th>
+                        <th class="py-2 px-4 border-b">Fecha Préstamo</th>
+                        <th class="py-2 px-4 border-b">Fecha Devolución</th>
                     </tr>
                     </thead>
                     <tbody>
@@ -62,7 +63,8 @@
                         <td class="py-2 px-4 border-b">1234567890</td>
                         <td class="py-2 px-4 border-b">Cien años de soledad</td>
                         <td class="py-2 px-4 border-b">Gabriel García Márquez</td>
-                        <td class="py-2 px-4 border-b">2</td>
+                        <td class="py-2 px-4 border-b">01/01/2024</td>
+                        <td class="py-2 px-4 border-b">01/02/2024</td>
                     </tr>
                     <!-- Agrega más filas según sea necesario -->
                     </tbody>
@@ -70,24 +72,20 @@
             </div>
             <div class="w-1/3">
                 <div class="bg-gray-100 p-4 rounded">
-                    <h3 class="text-lg font-bold mb-2">Préstamo</h3>
+                    <h3 class="text-lg font-bold mb-2">Devolución</h3>
                     <div class="mb-2">
                         <label for="id-libro" class="block text-gray-700">ID Libro</label>
                         <input type="text" id="id-libro" class="w-full border border-gray-300 rounded py-2 px-4">
                     </div>
                     <div class="mb-2">
-                        <label for="dni-prestamo" class="block text-gray-700">DNI</label>
-                        <input type="text" id="dni-prestamo" class="w-full border border-gray-300 rounded py-2 px-4">
+                        <label for="dni" class="block text-gray-700">DNI</label>
+                        <input type="text" id="dni" class="w-full border border-gray-300 rounded py-2 px-4">
                     </div>
                     <div class="mb-2">
-                        <label for="fecha" class="block text-gray-700">Fecha</label>
-                        <input type="text" id="fecha" class="w-full border border-gray-300 rounded py-2 px-4">
+                        <label for="fecha-devolucion" class="block text-gray-700">Fecha Devolución</label>
+                        <input type="text" id="fecha-devolucion" class="w-full border border-gray-300 rounded py-2 px-4">
                     </div>
-                    <div class="mb-2">
-                        <label for="dias" class="block text-gray-700">Días</label>
-                        <input type="text" id="dias" class="w-full border border-gray-300 rounded py-2 px-4">
-                    </div>
-                    <button class="bg-ocre text-white w-full py-2 rounded hover:bg-ocre-dark">Realizar Préstamo</button>
+                    <button class="bg-ocre text-white w-full py-2 rounded hover:bg-ocre-dark">Realizar Devolución</button>
                 </div>
             </div>
         </div>
