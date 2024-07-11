@@ -23,6 +23,22 @@
         .bg-crema-claro {
             background-color: #FFFDD0; /* Crema claro */
         }
+        .image-container {
+            width: 100px; /* Ajusta el tamaño según tus necesidades */
+            height: 150px; /* Ajusta el tamaño según tus necesidades */
+            background-color: #cc9966; /* Color ocre */
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            overflow: hidden; /* Para asegurarse de que la imagen se ajuste al contenedor */
+        }
+        .image-container img {
+            display: none; /* Ocultar imagen inicialmente */
+        }
+        .image-container.loaded img {
+            display: block; /* Mostrar imagen cuando se haya cargado */
+        }
+
     </style>
 </head>
 
@@ -32,9 +48,8 @@
         <div class="flex space-x-4">
             <a href="#" class="text-sm font-bold text-ocre-dark">Quiénes somos</a>
             <!--
-             <a href="#" class="text-sm font-bold text-ocre-dark">WhatsApp</a>
-             -->
-
+            <a href="#" class="text-sm font-bold text-ocre-dark">WhatsApp</a>
+            -->
         </div>
         <a href="#" class="text-sm font-bold text-ocre-dark">Soy Bibliotecario</a>
     </div>
@@ -42,7 +57,7 @@
 <div class="bg-white shadow py-4">
     <div class="container mx-auto flex flex-col sm:flex-row justify-between items-center px-6">
         <a href="<c:url value='/' />">
-            <img src="https://placehold.co/150x50" alt="La Librería Logo" class="h-12 mb-4 sm:mb-0">
+            <img src="https://i.postimg.cc/CxFmPffS/temp-Image-Tacv-RE.avif" alt="La Librería Logo" class="h-12 mb-4 sm:mb-0">
         </a>
         <div class="relative w-full sm:w-1/2 mt-2 sm:mt-0">
             <input type="text" placeholder="Título, Autor o ISBN" class="w-full border border-gray-300 rounded-full py-2 pl-4 pr-10 text-warmGray-800">
@@ -73,44 +88,52 @@
 <nav class="bg-ocre-dark py-2 text-white">
 </nav>
 
-    <main class="container mx-auto py-8">
+<main class="container mx-auto py-8">
+    <% Integer paginaActual = (Integer) session.getAttribute("paginaActual");
+        Integer cantidadPorPagina = (Integer) session.getAttribute("cantidadPorPagina");
+        Integer totalPaginas = (Integer) session.getAttribute("totalPaginas"); %>
 
-        <% Integer paginaActual = (Integer) session.getAttribute("paginaActual");
-            Integer cantidadPorPagina = (Integer) session.getAttribute("cantidadPorPagina");
-            Integer totalPaginas = (Integer) session.getAttribute("totalPaginas"); %>
+    <section>
+        <h2 class="ml-2 text-2xl font-bold mb-4">REPERTORIO DE LIBROS</h2>
+        <div class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-5 lg:grid-cols-7 gap-4">
+            <c:choose>
+                <c:when test="${empty libros}">
+                    <p class="text-center">No se encontraron libros.</p>
+                </c:when>
+                <c:otherwise>
+                    <c:forEach var="libro" items="${libros}">
+                        <div class="text-center">
+                            <div class="image-container mx-auto mb-2">
+                                <img style="box-shadow: 0px 0px 10px rgba(0,0,0,0.5);" src="${libro.link_imagen}" alt="Portada de ${libro.titulo}" class="book-cover">                            </div>
+                            <p class="font-bold">${libro.titulo}</p>
+                            <p class="text-xs">${libro.autor.nombre}</p>
+                        </div>
+                    </c:forEach>
+                </c:otherwise>
+            </c:choose>
+        </div>
+        <div class="pagination mt-4 flex justify-center items-center">
+            <c:if test="${paginaActual > 1}">
+                <a href="<c:url value='/libros/?accion=paginar&pagina=${paginaActual - 1}' />" class="text-blue-500 hover:underline">Anterior</a>
+            </c:if>
+            <span class="mx-2">Página ${paginaActual} de ${totalPaginas}</span>
+            <c:if test="${paginaActual < totalPaginas}">
+                <a href="<c:url value='/libros/?accion=paginar&pagina=${paginaActual + 1}' />" class="text-blue-500 hover:underline">Siguiente</a>
+            </c:if>
+        </div>
+    </section>
+</main>
 
-        <section>
-            <h2 class="ml-2 text-2xl font-bold mb-4">REPERTORIO DE LIBROS</h2>
-            <div class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-5 lg:grid-cols-7 gap-4">
-                <c:choose>
-                    <c:when test="${empty libros}">
-                        <p class="text-center">No se encontraron libros.</p>
-                    </c:when>
-                    <c:otherwise>
+<script>
+    document.addEventListener("DOMContentLoaded", function() {
+        const images = document.querySelectorAll('.image-container img');
 
-                        <c:forEach var="libro" items="${libros}">
-                            <div class="text-center">
-                                <img src="${libro.link_imagen}" alt="Portada de ${libro.titulo}" class="mx-auto mb-2">
-                                <p class="font-bold">${libro.titulo}</p>
-                                <p class="text-xs">${libro.autor.nombre}</p>
-                            </div>
-                        </c:forEach>
-
-                    </c:otherwise>
-                </c:choose>
-            </div>
-            <div class="pagination mt-4 flex justify-center items-center">
-                <c:if test="${paginaActual > 1}">
-                    <a href="<c:url value='/libros/?accion=paginar&pagina=${paginaActual - 1}' />" class="text-blue-500 hover:underline">Anterior</a>
-                </c:if>
-                <span class="mx-2">Página ${paginaActual} de ${totalPaginas}</span>
-                <c:if test="${paginaActual < totalPaginas}">
-                    <a href="<c:url value='/libros/?accion=paginar&pagina=${paginaActual + 1}' />" class="text-blue-500 hover:underline">Siguiente</a>
-                </c:if>
-            </div>
-        </section>
-
-
-    </main>
+        images.forEach(img => {
+            img.onload = function() {
+                img.parentElement.classList.add('loaded');
+            };
+        });
+    });
+</script>
 </body>
 </html>
