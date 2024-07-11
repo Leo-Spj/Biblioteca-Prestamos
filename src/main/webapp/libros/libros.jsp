@@ -48,8 +48,9 @@
         <div class="flex space-x-4">
             <a href="#" class="text-sm font-bold text-ocre-dark">Quiénes somos</a>
             <!--
-            <a href="#" class="text-sm font-bold text-ocre-dark">WhatsApp</a>
-            -->
+             <a href="#" class="text-sm font-bold text-ocre-dark">WhatsApp</a>
+             -->
+
         </div>
         <a href="#" class="text-sm font-bold text-ocre-dark">Soy Bibliotecario</a>
     </div>
@@ -71,8 +72,12 @@
 <div class="bg-crema-claro py-2 px-4 shadow text-ocre-dark">
     <div class="container mx-auto flex flex-col md:flex-row justify-between items-center space-y-4 md:space-y-0 px-6">
         <div class="flex space-x-4 font-semibold">
-            <a href="#" class="text-sm">Libros</a>
-            <a href="#" class="text-sm">Donaciones</a>
+            <a href="<c:url value='/libros/' />" class="text-sm">Libros</a>
+            <a href="#" class="text-sm">Realizar Préstamo</a>
+            <a href="#" class="text-sm">Registrar Usuario</a>
+            <a href="#" class="text-sm">Registrar Libro</a>
+            <a href="#" class="text-sm">Devoluciones</a>
+            <a href="#" class="text-sm">Contáctanos</a>
         </div>
 
         <div class="flex space-x-4">
