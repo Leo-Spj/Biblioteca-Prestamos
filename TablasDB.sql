@@ -4,51 +4,51 @@ CREATE DATABASE `biblioteca-prestamos`;
 USE `biblioteca-prestamos`;
 
 CREATE TABLE Rol (
-    rol_id INT PRIMARY KEY AUTO_INCREMENT,
-    nombre VARCHAR(50) UNIQUE NOT NULL
+rol_id INT PRIMARY KEY AUTO_INCREMENT,
+nombre VARCHAR(50) UNIQUE NOT NULL
 );
 
 CREATE TABLE Usuario (
-    usuario_id INT PRIMARY KEY AUTO_INCREMENT,
-    nombres VARCHAR(100) NOT NULL,
-    apellidos VARCHAR(100) NOT NULL,
-    dni INT UNIQUE NOT NULL,
-    correo VARCHAR(100) UNIQUE,
-    contraseña VARCHAR(255),
-    rol_id INT,
-    estado BOOLEAN NOT NULL DEFAULT TRUE,
+usuario_id INT PRIMARY KEY AUTO_INCREMENT,
+nombres VARCHAR(100) NOT NULL,
+apellidos VARCHAR(100) NOT NULL,
+dni INT UNIQUE NOT NULL,
+correo VARCHAR(100) UNIQUE,
+contraseña VARCHAR(255),
+rol_id INT,
+estado BOOLEAN NOT NULL DEFAULT TRUE,
 
-    FOREIGN KEY (rol_id) REFERENCES Rol(rol_id)
+FOREIGN KEY (rol_id) REFERENCES Rol(rol_id)
 );
 
 CREATE TABLE Autor (
-    autor_id INT PRIMARY KEY AUTO_INCREMENT,
-    nombre VARCHAR(100) UNIQUE NOT NULL
+autor_id INT PRIMARY KEY AUTO_INCREMENT,
+nombre VARCHAR(100) UNIQUE NOT NULL
 );
 
 CREATE TABLE Libro (
-    libro_id INT PRIMARY KEY AUTO_INCREMENT,
-    isbn VARCHAR(20) UNIQUE NOT NULL,
-    titulo VARCHAR(200) NOT NULL,
-    autor_id INT NOT NULL,
-    link_imagen VARCHAR(255),
-    descripcion TEXT,
-    stock INT NOT NULL,
+libro_id INT PRIMARY KEY AUTO_INCREMENT,
+isbn VARCHAR(20) UNIQUE NOT NULL,
+titulo VARCHAR(200) NOT NULL,
+autor_id INT NOT NULL,
+link_imagen VARCHAR(255),
+descripcion TEXT,
+stock INT NOT NULL,
 
-    FOREIGN KEY (autor_id) REFERENCES Autor(autor_id)
+FOREIGN KEY (autor_id) REFERENCES Autor(autor_id)
 );
 
 CREATE TABLE Prestamo (
-    prestamo_id INT PRIMARY KEY AUTO_INCREMENT,
-    usuario_id INT,
-    libro_id INT,
-    fecha_prestamo DATE NOT NULL,
-    fecha_limite DATE NOT NULL,
-    fecha_devolucion DATE,
-    devuelto BOOLEAN NOT NULL DEFAULT FALSE,
+prestamo_id INT PRIMARY KEY AUTO_INCREMENT,
+usuario_id INT,
+libro_id INT,
+fecha_prestamo DATE NOT NULL,
+fecha_limite DATE NOT NULL,
+fecha_devolucion DATE,
+devuelto BOOLEAN NOT NULL DEFAULT FALSE,
 
-    FOREIGN KEY (usuario_id) REFERENCES Usuario(usuario_id),
-    FOREIGN KEY (libro_id) REFERENCES Libro(libro_id)
+FOREIGN KEY (usuario_id) REFERENCES Usuario(usuario_id),
+FOREIGN KEY (libro_id) REFERENCES Libro(libro_id)
 );
 
 -- Crear índices
@@ -66,9 +66,12 @@ INSERT INTO Rol (nombre) VALUES
 INSERT INTO Usuario (nombres, apellidos, dni, correo, contraseña, rol_id) VALUES
 ('Bibliotecario', 'Bibliotecario', 12345678, 'biblioteca@utp.edu.pe', 'biblioteca123', 1);
 
+-- usuarios bloqueados
+INSERT INTO Usuario (nombres, apellidos, dni, rol_id, estado) VALUES
+('Usuario2', 'Usuario', 87654321, 2, FALSE),
+('Usuario3', 'Usuario2', 87654322, 2, FALSE);
+
 INSERT INTO Usuario (nombres, apellidos, dni, rol_id) VALUES
-('Usuario2', 'Usuario', 87654321, 2),
-('Usuario3', 'Usuario2', 87654322, 2),
 ('Usuario4', 'Usuario3', 87654323, 2);
 
 -- Insertar registros en Autor
@@ -89,7 +92,7 @@ CREATE TRIGGER tr_set_default_image
 BEFORE INSERT ON Libro
 FOR EACH ROW
 BEGIN
-IF NEW.link_imagen IS NULL OR NEW.link_imagen = '' THEN
+IF NEW.link_imagen IS NULL THEN
 SET NEW.link_imagen = CONCAT('https://placehold.co/100x150/orange/white?text=', REPLACE(NEW.titulo, ' ', '%5Cn'));
 END IF;
 END;
@@ -157,36 +160,45 @@ INSERT INTO Libro (isbn, titulo, autor_id,link_imagen ,descripcion, stock) VALUE
 ('5036265268', 'Residencia en la tierra', 9, 'https://i.postimg.cc/MGX77P7p/56-Residencia-en-la-tierra.jpg', 'Serie de poemas que exploran la alienación y el absurdo de la existencia humana.', 1),
 ('6626438257', 'Memorial de Isla Negra', 9, 'https://i.postimg.cc/yN5FvmjX/57-Memorial-de-Isla-Negra.jpg', 'Poemario autobiográfico que recorre la vida del poeta y su relación con Chile.', 1);
 
-INSERT INTO Prestamo (usuario_id, libro_id, fecha_prestamo, fecha_limite, fecha_devolucion, devuelto) VALUES
-(2, 7, '2021-09-01', '2021-09-15', '2021-09-15', TRUE),
-(3, 48, '2021-09-01', '2021-09-15', '2021-09-15', TRUE),
-(4, 39, '2021-09-01', '2021-09-15', '2021-09-15', TRUE);
+INSERT INTO prestamo (usuario_id, libro_id, fecha_prestamo, fecha_limite, fecha_devolucion, devuelto) VALUES
+(2, 7, '2024-07-01', '2024-07-8', '2024-07-8', TRUE),
+(3, 48, '2024-07-01', '2024-07-8', '2024-07-8', TRUE),
+(4, 39, '2024-07-01', '2024-07-8', '2024-07-8', TRUE);
+
+-- prestamos sin devolver
+INSERT INTO prestamo (usuario_id, libro_id, fecha_prestamo, fecha_limite) VALUES
+(2, 7, '2024-07-08', '2024-07-11'),
+(3, 48, '2024-07-08', '2024-07-11');
 
 -- Stored Procedures
 
 -- Procedimiento para realizar un préstamo comprobando que el "estado" del usuario sea TRUE
 DELIMITER //
-CREATE PROCEDURE sp_realizar_prestamo(IN p_usuario_dni INT, IN p_libro_id INT, IN p_dias INT)
+CREATE PROCEDURE sp_realizar_prestamo(
+    IN p_usuario_dni INT,
+    IN p_libro_id INT,
+    IN p_dias INT,
+    OUT p_mensaje VARCHAR(255)
+)
 BEGIN
-DECLARE v_estado BOOLEAN;
-DECLARE v_stock INT;
+    DECLARE v_estado BOOLEAN;
+    DECLARE v_stock INT;
+    DECLARE v_prestamos_activos INT;
 
-SELECT estado INTO v_estado
-FROM Usuario
-WHERE dni = p_usuario_dni;
+    SELECT estado INTO v_estado FROM Usuario WHERE dni = p_usuario_dni;
+    SELECT stock INTO v_stock FROM Libro WHERE libro_id = p_libro_id;
+    SELECT COUNT(*) INTO v_prestamos_activos FROM Prestamo WHERE usuario_id = (SELECT usuario_id FROM Usuario WHERE dni = p_usuario_dni) AND devuelto = FALSE;
 
-SELECT stock INTO v_stock
-FROM Libro
-WHERE libro_id = p_libro_id;
-
-IF v_estado = TRUE AND v_stock > 0 THEN
-INSERT INTO Prestamo (usuario_id, libro_id, fecha_prestamo, fecha_limite)
-VALUES ((SELECT usuario_id FROM Usuario WHERE dni = p_usuario_dni), p_libro_id, CURRENT_DATE, CURRENT_DATE + INTERVAL p_dias DAY);
-ELSEIF v_stock < 1 THEN
-SELECT 'No hay stock disponible para este libro' AS mensaje;
-ELSE
-SELECT 'El usuario no puede realizar préstamos' AS mensaje;
-END IF;
+    IF v_prestamos_activos >= 1 THEN
+    SET p_mensaje = 'El usuario ya tiene un libro sin devolver. No puede realizar más préstamos hasta devolverlo.';
+    ELSEIF v_estado = TRUE AND v_stock > 0 THEN
+    INSERT INTO Prestamo (usuario_id, libro_id, fecha_prestamo, fecha_limite) VALUES ((SELECT usuario_id FROM Usuario WHERE dni = p_usuario_dni), p_libro_id, CURRENT_DATE, CURRENT_DATE + INTERVAL p_dias DAY);
+    SET p_mensaje = 'Préstamo realizado con éxito.';
+    ELSEIF v_stock < 1 THEN
+    SET p_mensaje = 'No hay stock disponible para este libro';
+    ELSE
+    SET p_mensaje = 'El usuario no puede realizar préstamos';
+    END IF;
 END //
 DELIMITER ;
 
