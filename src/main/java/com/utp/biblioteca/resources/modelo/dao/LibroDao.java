@@ -244,4 +244,32 @@ public class LibroDao implements CrudDao<Libro, Integer> {
         }
         return existe;
     }
+
+    public Object buscarPorCualquierCampo(String busqueda) {
+        List<Libro> libros = new ArrayList<>();
+        try (Connection conn = getConnection();
+             PreparedStatement ps = conn.prepareStatement("SELECT * FROM Libro WHERE isbn LIKE ? OR titulo LIKE ? OR autor_id IN (SELECT autor_id FROM Autor WHERE nombre LIKE ?)")) {
+            ps.setString(1, "%" + busqueda + "%");
+            ps.setString(2, "%" + busqueda + "%");
+            ps.setString(3, "%" + busqueda + "%");
+            ResultSet rs = ps.executeQuery();
+            while (rs.next()) {
+                AutorDao autorDao = new AutorDao();
+                Autor autor = autorDao.buscarUno(rs.getInt("autor_id"));
+
+                Libro libro = new Libro();
+                libro.setLibro_id(rs.getInt("libro_id"));
+                libro.setIsbn(rs.getString("isbn"));
+                libro.setTitulo(rs.getString("titulo"));
+                libro.setAutor(autor);
+                libro.setLink_imagen(rs.getString("link_imagen"));
+                libro.setDescripcion(rs.getString("descripcion"));
+                libro.setStock(rs.getInt("stock"));
+                libros.add(libro);
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return libros;
+    }
 }
