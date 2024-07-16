@@ -21,7 +21,7 @@ import jakarta.servlet.http.HttpServletResponse;
  *
  * @author leo
  */
-@WebServlet("/libros/")
+@WebServlet(urlPatterns = "/libros/")
 public class ListadoLibrosServlet extends HttpServlet {
 
     /**

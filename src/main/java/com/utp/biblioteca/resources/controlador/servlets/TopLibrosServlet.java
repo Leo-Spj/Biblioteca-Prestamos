@@ -20,7 +20,7 @@ import java.util.List;
  *
  * @author leo
  */
-@WebServlet({"/"})
+@WebServlet(urlPatterns = "")
 public class TopLibrosServlet extends HttpServlet {
 
     /**

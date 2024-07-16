@@ -30,7 +30,7 @@ CREATE TABLE Libro (
 libro_id INT PRIMARY KEY AUTO_INCREMENT,
 isbn VARCHAR(20) UNIQUE NOT NULL,
 titulo VARCHAR(200) NOT NULL,
-autor_id INT NOT NULL,
+autor_id INT,
 link_imagen VARCHAR(255),
 descripcion TEXT,
 stock INT NOT NULL,
@@ -68,11 +68,11 @@ INSERT INTO Usuario (nombres, apellidos, dni, correo, contraseña, rol_id) VALUE
 
 -- usuarios bloqueados
 INSERT INTO Usuario (nombres, apellidos, dni, rol_id, estado) VALUES
-('Usuario2', 'Usuario', 87654321, 2, FALSE),
-('Usuario3', 'Usuario2', 87654322, 2, FALSE);
+('Usuario1', 'Usuario1', 87654321, 2, FALSE),
+('Usuario2', 'Usuario2', 87654322, 2, FALSE);
 
 INSERT INTO Usuario (nombres, apellidos, dni, rol_id) VALUES
-('Usuario4', 'Usuario3', 87654323, 2);
+('Usuario3', 'Usuario3', 87654323, 2);
 
 -- Insertar registros en Autor
 INSERT INTO Autor (nombre) VALUES
@@ -229,6 +229,50 @@ END IF;
 END //
 DELIMITER ;
 
+-- SP para verificar si hay libros sin stock
+DELIMITER //
+CREATE PROCEDURE sp_libros_sin_stock()
+BEGIN
+SELECT * FROM Libro WHERE stock = 0;
+END //
+DELIMITER ;
+
+-- SP para verificar usuarios atrasados
+DELIMITER //
+CREATE PROCEDURE sp_usuarios_atrasados()
+BEGIN
+SELECT u.* FROM Usuario u
+INNER JOIN Prestamo p ON u.usuario_id = p.usuario_id
+WHERE p.fecha_limite < CURDATE() AND p.devuelto = FALSE;
+END //
+DELIMITER ;
+
+-- SP para determinar la frecuencia de prestamos
+DELIMITER //
+CREATE PROCEDURE sp_frecuencia_prestamos()
+BEGIN
+SELECT l.titulo, COUNT(p.prestamo_id) AS frecuencia
+FROM Prestamo p
+INNER JOIN Libro l ON p.libro_id = l.libro_id
+GROUP BY l.titulo
+ORDER BY frecuencia DESC;
+END //
+DELIMITER ;
+
+--SP para determinar quien tiene determinado libro prestado
+DELIMITER //
+CREATE PROCEDURE sp_quienes_tienen_libro(IN libroId INT)
+BEGIN
+SELECT u.usuario_id, u.nombres, u.apellidos, u.dni, u.correo, u.estado, l.titulo
+FROM Usuario u
+INNER JOIN Prestamo p ON u.usuario_id = p.usuario_id
+INNER JOIN Libro l ON p.libro_id = l.libro_id
+WHERE p.libro_id = libroId AND p.devuelto = FALSE;
+END //
+DELIMITER ;
+
+
+
 
 -- Triggers
 
@@ -279,3 +323,8 @@ AND devuelto = FALSE
 );
 END //
 DELIMITER ;
+
+
+
+
+
