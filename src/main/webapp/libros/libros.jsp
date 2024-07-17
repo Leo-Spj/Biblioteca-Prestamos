@@ -24,20 +24,16 @@
             background-color: #FFFDD0; /* Crema claro */
         }
         .image-container {
-            width: 100px; /* Ajusta el tamaño según tus necesidades */
-            height: 150px; /* Ajusta el tamaño según tus necesidades */
+            width: 100px;
+            height: 150px;
             background-color: #cc9966; /* Color ocre */
             display: flex;
             align-items: center;
             justify-content: center;
-            overflow: hidden; /* Para asegurarse de que la imagen se ajuste al contenedor */
+            overflow: hidden;
         }
-        .image-container img {
-            display: none; /* Ocultar imagen inicialmente */
-        }
-        .image-container.loaded img {
-            display: block; /* Mostrar imagen cuando se haya cargado */
-        }
+
+
 
     </style>
 </head>
@@ -101,7 +97,8 @@
                     <c:forEach var="libro" items="${libros}">
                         <div class="text-center">
                             <div class="image-container mx-auto mb-2">
-                                <img style="box-shadow: 0px 0px 10px rgba(0,0,0,0.5);" src="${libro.link_imagen}" alt="Portada de ${libro.titulo}" class="book-cover">                            </div>
+                                <img style="box-shadow: 0px 0px 10px rgba(0,0,0,0.5);" src="${libro.link_imagen}" alt="Portada de ${libro.titulo}" class="book-cover">
+                            </div>
                             <p class="font-bold">${libro.titulo}</p>
                             <p class="text-xs">${libro.autor.nombre}</p>
                         </div>
@@ -121,16 +118,5 @@
     </section>
 </main>
 
-<script>
-    document.addEventListener("DOMContentLoaded", function() {
-        const images = document.querySelectorAll('.image-container img');
-
-        images.forEach(img => {
-            img.onload = function() {
-                img.parentElement.classList.add('loaded');
-            };
-        });
-    });
-</script>
 </body>
 </html>
