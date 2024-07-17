@@ -180,6 +180,11 @@
         const dniPrestamo = document.getElementById('dni-prestamo').value;
         const dias = document.getElementById('dias').value;
 
+        if (!idLibro || !dniPrestamo || !dias) {
+            alert("Todos los campos son obligatorios.");
+            return; // Detener la ejecución de la función si falta algún dato
+        }
+
         fetch('http://localhost:8080/api/prestamo/realizar', {
             method: 'POST',
             headers: {
