@@ -65,7 +65,7 @@
     <br />
 
     <f:view>
-        <div class="flex flex-grow items-center justify-center">
+        <div class="flex flex-col items-center justify-center">
             <div class="w-full max-w-xl bg-white shadow-lg rounded-lg overflow-hidden">
                 <div class="bg-ocre-dark px-6 py-4">
                     <h1 class="text-2xl font-bold text-white">Registro de Libros</h1>
@@ -108,6 +108,24 @@
                     </div>
                 </h:form>
             </div>
+
+            <!-- creacion de autores formulario-->
+            <div class="mt-4 w-full max-w-xl bg-white shadow-lg rounded-lg overflow-hidden">
+                <div class="bg-ocre-dark px-6 py-4">
+                    <h1 class="text-2xl font-bold text-white">Registro de Autores</h1>
+                </div>
+                <h:form id="autorForm" class="p-6 space-y-4">
+                    <div>
+                        <h:outputLabel value="Nombre:" for="nombre" styleClass="block text sm font-medium text-gray-700" />
+                        <h:inputText id="nombre" value="#{libroBean.nombreAutor}" required="true" styleClass="border border-gray-300 rounded-md shadow-sm mt-1 p-2 w-full" />
+                    </div>
+
+                    <div class="flex justify-end mt-4">
+                        <h:commandButton value="Submit" action="#{libroBean.submitAutor}" styleClass="bg-ocre-dark text-white font-bold py-2 px-4 rounded hover:bg-ocre-dark/90" />
+                    </div>
+                </h:form>
+            </div>
+
         </div>
     </f:view>
     <br />

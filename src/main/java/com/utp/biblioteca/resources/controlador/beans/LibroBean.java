@@ -24,6 +24,8 @@ public class LibroBean implements Serializable {
 
     private LibroDao libroDao = new LibroDao();
     private Libro libro = new Libro();
+    private Autor autor = new Autor();
+    private String nombreAutor;
     private AutorDao autorDao = new AutorDao();
     private int autorId;
 
@@ -59,5 +61,32 @@ public class LibroBean implements Serializable {
 
         System.out.println("Libro: " + libro);
         libroDao.crear(libro);
+    }
+
+    // para los autores:
+
+    public String getNombreAutor() {
+        return nombreAutor;
+    }
+
+    public void setNombreAutor(String nombreAutor) {
+        this.nombreAutor = nombreAutor;
+    }
+
+    public Autor getAutor() {
+        return autor;
+    }
+
+    public void setAutor(Autor autor) {
+        this.autor = autor;
+    }
+
+    public void submitAutor() {
+        autor.setNombre(nombreAutor);
+        autorDao.crear(autor);
+        System.out.println("Autor creado: " + autor);
+
+        autor = new Autor();
+        nombreAutor = null;
     }
 }
