@@ -23,6 +23,19 @@
         <load-on-startup>1</load-on-startup>
     </servlet>
 
+    <servlet>
+        <servlet-name>HtmlFileServlet</servlet-name>
+        <servlet-class>com.utp.biblioteca.resources.controlador.servlets.HtmlFileServlet</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>HtmlFileServlet</servlet-name>
+        <url-pattern>/gestion/*</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>HtmlFileServlet</servlet-name>
+        <url-pattern>/usuario/*</url-pattern>
+    </servlet-mapping>
+
     <servlet-mapping>
         <servlet-name>TopLibrosServlet</servlet-name>
         <url-pattern>/TopLibrosServlet</url-pattern>
