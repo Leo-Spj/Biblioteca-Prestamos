@@ -4,7 +4,8 @@
 <html xmlns="http://www.w3.org/1999/xhtml"
       xmlns:h="http://xmlns.jcp.org/jsf/html"
       xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
-      xmlns:f="http://xmlns.jcp.org/jsf/core">
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
 <h:head>
     <title>Formulario Usuario</title>
     <script src="https://cdn.tailwindcss.com"></script>
@@ -71,6 +72,8 @@
                     <h1 class="text-2xl font-bold text-white">Registro de Usuario</h1>
                 </div>
                 <h:form id="usuarioForm" class="p-6 space-y-4">
+                    <p:growl id="growl" showDetail="true" sticky="false" />
+
                     <div>
                         <h:outputLabel value="Nombres:" for="nombres" styleClass="block text-sm font-medium text-gray-700" />
                         <h:inputText id="nombres" value="#{usuarioBean.usuario.nombres}" required="true" styleClass="border border-gray-300 rounded-md shadow-sm mt-1 p-2 w-full" />
@@ -91,8 +94,14 @@
                         <h:inputText id="correo" value="#{usuarioBean.usuario.correo}" required="true" styleClass="border border-gray-300 rounded-md shadow-sm mt-1 p-2 w-full" />
                     </div>
 
+                    <!-- Campos ocultos para contraseña y rol -->
+                    <h:inputHidden id="contraseña" value="#{usuarioBean.usuario.contraseña}" />
+                    <h:inputHidden id="rol" value="#{usuarioBean.rolId}" />
+
                     <div class="flex justify-end mt-4">
-                        <h:commandButton value="Submit" action="#{usuarioBean.submit}" styleClass="bg-ocre-dark text-white font-bold py-2 px-4 rounded hover:bg-ocre-dark/90" />
+                        <h:commandButton value="Submit" action="#{usuarioBean.submit}" styleClass="bg-ocre-dark text-white font-bold py-2 px-4 rounded hover:bg-ocre-dark/90">
+                            <f:ajax execute="@form" render="growl" />
+                        </h:commandButton>
                     </div>
                 </h:form>
             </div>

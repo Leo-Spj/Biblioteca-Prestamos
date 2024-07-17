@@ -8,17 +8,14 @@ import com.utp.biblioteca.resources.modelo.Rol;
 import com.utp.biblioteca.resources.modelo.Usuario;
 import com.utp.biblioteca.resources.modelo.dao.RolDao;
 import com.utp.biblioteca.resources.modelo.dao.UsuarioDao;
+import jakarta.faces.application.FacesMessage;
+import jakarta.faces.context.FacesContext;
 import jakarta.faces.view.ViewScoped;
 import jakarta.inject.Named;
 
-import java.beans.*;
 import java.io.Serializable;
 import java.util.List;
 
-/**
- *
- * @author brandonluismenesessolorzano
- */
 @Named
 @ViewScoped
 public class UsuarioBean implements Serializable {
@@ -26,10 +23,11 @@ public class UsuarioBean implements Serializable {
     private UsuarioDao usuarioDao = new UsuarioDao();
     private Usuario usuario = new Usuario();
     private RolDao rolDao = new RolDao();
-    private int rolId;
+    private int rolId = 2; // Valor por defecto para usuario
 
     public UsuarioBean() {
         usuario.setEstado(true);
+        usuario.setContraseña(""); // Contraseña vacía por defecto
     }
 
     public List<Rol> getRoles() {
@@ -53,11 +51,13 @@ public class UsuarioBean implements Serializable {
     }
 
     public void submit() {
-        Rol rolCompleto = rolDao.buscarUno(rolId);
-
-        usuario.setRol(rolCompleto);
-
-        System.out.println("Usuario: " + usuario);
-        usuarioDao.crear(usuario);
+        try {
+            Rol rolCompleto = rolDao.buscarUno(rolId);
+            usuario.setRol(rolCompleto);
+            usuarioDao.crear(usuario);
+            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Usuario registrado", "El usuario se registró correctamente"));
+        } catch (Exception e) {
+            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "Error", "Hubo un problema al registrar el usuario"));
+        }
     }
 }
