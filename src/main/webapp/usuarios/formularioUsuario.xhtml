@@ -97,18 +97,6 @@
                         <h:inputText id="correo" value="#{usuarioBean.usuario.correo}" required="true" styleClass="border border-gray-300 rounded-md shadow-sm mt-1 p-2 w-full" />
                     </div>
 
-                    <div>
-                        <h:outputLabel value="Contraseña:" for="contraseña" styleClass="block text-sm font-medium text-gray-700" />
-                        <h:inputSecret id="contraseña" value="#{usuarioBean.usuario.contraseña}" required="true" styleClass="border border-gray-300 rounded-md shadow-sm mt-1 p-2 w-full" />
-                    </div>
-
-                    <div>
-                        <h:outputLabel value="Rol:" for="rol" styleClass="block text-sm font-medium text-gray-700" />
-                        <h:selectOneMenu id="rol" value="#{usuarioBean.rolId}" required="true" styleClass="border border-gray-300 rounded-md shadow-sm mt-1 p-2 w-full">
-                            <f:selectItems value="#{usuarioBean.roles}" var="rol" itemValue="#{rol.rol_id}" itemLabel="#{rol.nombre}" />
-                        </h:selectOneMenu>
-                    </div>
-
                     <div class="flex justify-end mt-4">
                         <h:commandButton value="Submit" action="#{usuarioBean.submit}" styleClass="bg-ocre-dark text-white font-bold py-2 px-4 rounded hover:bg-ocre-dark/90" />
                     </div>
