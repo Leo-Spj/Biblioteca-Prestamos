@@ -40,7 +40,7 @@
 <header class="bg-crema-claro py-2 shadow-sm">
     <div class="container mx-auto flex justify-between items-center px-6">
         <div class="flex space-x-4">
-            <a href="#" class="text-sm font-bold text-ocre-dark">Quiénes somos</a>
+            <a href="#" class="text-sm font-bold text-ocre-dark">Quienes somos</a>
         </div>
         <a href="#" class="text-sm font-bold text-ocre-dark">Soy Bibliotecario</a>
     </div>
@@ -63,7 +63,7 @@
     <div class="container mx-auto flex flex-col md:flex-row justify-between items-center space-y-4 md:space-y-0 px-6">
         <div class="flex space-x-4 font-semibold">
             <a href="/libros" class="text-sm">Libros</a>
-            <a href="/gestion/Prestamos" class="text-sm">Realizar Préstamo</a>
+            <a href="/gestion/Prestamos" class="text-sm">Realizar Prestamo</a>
             <a href="http://localhost:8080/gestion/Devoluciones" class="text-sm">Devoluciones</a>
             <a href="http://localhost:8080/faces/usuarios/formularioUsuario.xhtml" class="text-sm">Registrar Usuario</a>
             <a href="http://localhost:8080/faces/libros/formularioLibro.xhtml" class="text-sm">Registrar Libro</a>
@@ -85,16 +85,16 @@
     <div class="bg-white shadow-md rounded-lg p-6">
         <div class="flex justify-between mb-4">
             <div>
-                <h2 class="text-2xl font-bold">Realizar devolución</h2>
+                <h2 class="text-2xl font-bold">Realizar devolucion</h2>
             </div>
             <div class="flex space-x-4">
-                <a href="prestamos.html" class="bg-ocre text-white px-4 py-2 rounded hover:bg-ocre-dark">Préstamos</a>
+                <a href="prestamos.html" class="bg-ocre text-white px-4 py-2 rounded hover:bg-ocre-dark">Prestamos</a>
                 <a href="http://localhost:8080/faces/usuarios/formularioUsuario.xhtml#" class="bg-ocre text-white px-4 py-2 rounded hover:bg-ocre-dark">Registrar Usuario</a>
             </div>
         </div>
 
         <div class="flex space-x-6">
-            <label for="search" class="block text-gray-700">Ingrese el dni para búsqueda</label>
+            <label for="search" class="block text-gray-700">Ingrese el dni para busqueda</label>
             <div class="flex">
                 <input type="text" id="dni-search" placeholder="DNI" class="w-full border border-gray-300 rounded-l py-2 px-4" onkeyup="handleKeyUp(event)">
                 <button class="bg-gray-300 border border-gray-300 rounded-r px-4 py-2" onclick="buscarHistorial()">
@@ -112,8 +112,8 @@
                         <th class="py-2 px-4 border-b">ISBN</th>
                         <th class="py-2 px-4 border-b">Título</th>
                         <th class="py-2 px-4 border-b">Autor</th>
-                        <th class="py-2 px-4 border-b">Fecha Préstamo</th>
-                        <th class="py-2 px-4 border-b">Fecha Devolución</th>
+                        <th class="py-2 px-4 border-b">Fecha Prestamo</th>
+                        <th class="py-2 px-4 border-b">Fecha Devolucion</th>
                         <th class="py-2 px-4 border-b">Acciones</th>
                     </tr>
                     </thead>
@@ -127,6 +127,37 @@
 </div>
 
 <script>
+
+    //al cargar la pagina mostrar todos los prestamos
+    window.onload = cargarTodosLosPrestamos;
+    function cargarTodosLosPrestamos() {
+        fetch('http://localhost:8080/api/prestamo')
+            .then(response => response.json())
+            .then(data => {
+                const prestamosBody = document.getElementById('prestamos-body');
+                prestamosBody.innerHTML = ''; // Limpiar tabla antes de agregar nuevos datos
+                data.forEach(prestamo => {
+                    const row = document.createElement('tr');
+                    row.innerHTML = `
+                        <td class="py-2 px-4 border-b">${prestamo.prestamo_id}</td>
+                        <td class="py-2 px-4 border-b">${prestamo.libro.isbn}</td>
+                        <td class="py-2 px-4 border-b">${prestamo.libro.titulo}</td>
+                        <td class="py-2 px-4 border-b">${prestamo.libro.autor.nombre}</td>
+                        <td class="py-2 px-4 border-b">${prestamo.fecha_prestamo}</td>
+                        <td class="py-2 px-4 border-b">${prestamo.fecha_devolucion || 'Pendiente'}</td>
+                        <td class="py-2 px-4 border-b">
+                            <button onclick="devolverLibro(${prestamo.prestamo_id})" class="bg-ocre text-white px-2 py-1 rounded hover:bg-ocre-dark">Devolver</button>
+                        </td>
+                    `;
+                    prestamosBody.appendChild(row);
+                });
+            })
+            .catch(error => {
+                console.error('Error:', error);
+            });
+    }
+
+
     function handleKeyUp(event) {
         if (event.key === 'Enter') {
             buscarHistorial();
@@ -135,6 +166,10 @@
 
     function buscarHistorial() {
         const dni = document.getElementById('dni-search').value;
+
+        if (dni === '') {
+            cargarTodosLosPrestamos();
+        }
 
         fetch(`http://localhost:8080/api/prestamo/historial/${dni}`)
             .then(response => response.json())
