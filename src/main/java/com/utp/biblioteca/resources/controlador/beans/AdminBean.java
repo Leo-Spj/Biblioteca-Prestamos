@@ -1,4 +1,4 @@
-package com.utp.biblioteca.resources.modelo.administracion;
+package com.utp.biblioteca.resources.controlador.beans;
 
 import com.utp.biblioteca.resources.modelo.Usuario;
 import com.utp.biblioteca.resources.modelo.dao.UsuarioDao;
