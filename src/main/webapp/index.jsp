@@ -60,10 +60,10 @@
     <div class="container mx-auto flex flex-col md:flex-row justify-between items-center space-y-4 md:space-y-0 px-6">
         <div class="flex space-x-4 font-semibold">
             <a href="<c:url value='/libros/' />" class="text-sm">Libros</a>
-            <a href="<c:url value='/gestion/Prestamos.html' />" class="text-sm">Realizar Préstamo</a>
+            <a href="<c:url value='/gestion/Prestamos' />" class="text-sm">Realizar Préstamo</a>
             <a href="<c:url value='/faces/usuarios/formularioUsuario.xhtml' />" class="text-sm">Registrar Usuario</a>
             <a href="<c:url value='/faces/libros/formularioLibro.xhtml' />" class="text-sm">Registrar Libro</a>
-            <a href="<c:url value='/gestion/Devoluciones.html' />" class="text-sm">Devoluciones</a>
+            <a href="<c:url value='/gestion/Devoluciones' />" class="text-sm">Devoluciones</a>
             <a href="#" class="text-sm">Contáctanos</a>
         </div>
 

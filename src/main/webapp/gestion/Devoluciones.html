@@ -38,17 +38,13 @@
     <div class="container mx-auto flex justify-between items-center px-6">
         <div class="flex space-x-4">
             <a href="#" class="text-sm font-bold text-ocre-dark">Quiénes somos</a>
-            <!--
-             <a href="#" class="text-sm font-bold text-ocre-dark">WhatsApp</a>
-             -->
-
         </div>
         <a href="#" class="text-sm font-bold text-ocre-dark">Soy Bibliotecario</a>
     </div>
 </header>
 <div class="bg-white shadow py-4">
     <div class="container mx-auto flex flex-col sm:flex-row justify-between items-center px-6">
-        <a href="<c:url value='/' />">
+        <a href="#">
             <img src="https://i.postimg.cc/CxFmPffS/temp-Image-Tacv-RE.avif" alt="La Librería Logo" class="h-12 mb-4 sm:mb-0">
         </a>
         <div class="relative w-full sm:w-1/2 mt-2 sm:mt-0">
@@ -63,7 +59,7 @@
 <div class="bg-crema-claro py-2 px-4 shadow text-ocre-dark">
     <div class="container mx-auto flex flex-col md:flex-row justify-between items-center space-y-4 md:space-y-0 px-6">
         <div class="flex space-x-4 font-semibold">
-            <a href="<c:url value='/libros/' />" class="text-sm">Libros</a>
+            <a href="#" class="text-sm">Libros</a>
             <a href="#" class="text-sm">Realizar Préstamo</a>
             <a href="#" class="text-sm">Registrar Usuario</a>
             <a href="#" class="text-sm">Registrar Libro</a>
@@ -114,18 +110,11 @@
                         <th class="py-2 px-4 border-b">Autor</th>
                         <th class="py-2 px-4 border-b">Fecha Préstamo</th>
                         <th class="py-2 px-4 border-b">Fecha Devolución</th>
+                        <th class="py-2 px-4 border-b">Acciones</th>
                     </tr>
                     </thead>
-                    <tbody>
-                    <tr>
-                        <td class="py-2 px-4 border-b">1</td>
-                        <td class="py-2 px-4 border-b">1234567890</td>
-                        <td class="py-2 px-4 border-b">Cien años de soledad</td>
-                        <td class="py-2 px-4 border-b">Gabriel García Márquez</td>
-                        <td class="py-2 px-4 border-b">01/01/2024</td>
-                        <td class="py-2 px-4 border-b">01/02/2024</td>
-                    </tr>
-                    <!-- Agrega más filas según sea necesario -->
+                    <tbody id="prestamos-body">
+                    <!-- Filas de préstamos se agregarán aquí -->
                     </tbody>
                 </table>
             </div>
@@ -133,23 +122,68 @@
                 <div class="bg-gray-100 p-4 rounded">
                     <h3 class="text-lg font-bold mb-2">Devolución</h3>
                     <div class="mb-2">
-                        <label for="id-libro" class="block text-gray-700">ID Libro</label>
-                        <input type="text" id="id-libro" class="w-full border border-gray-300 rounded py-2 px-4">
+                        <label for="prestamo-id" class="block text-gray-700">ID Préstamo</label>
+                        <input type="text" id="prestamo-id" class="w-full border border-gray-300 rounded py-2 px-4">
                     </div>
-                    <div class="mb-2">
-                        <label for="dni" class="block text-gray-700">DNI</label>
-                        <input type="text" id="dni" class="w-full border border-gray-300 rounded py-2 px-4">
-                    </div>
-                    <div class="mb-2">
-                        <label for="fecha-devolucion" class="block text-gray-700">Fecha Devolución</label>
-                        <input type="text" id="fecha-devolucion" class="w-full border border-gray-300 rounded py-2 px-4">
-                    </div>
-                    <button class="bg-ocre text-white w-full py-2 rounded hover:bg-ocre-dark">Realizar Devolución</button>
+                    <button onclick="realizarDevolucion()" class="bg-ocre text-white w-full py-2 rounded hover:bg-ocre-dark">Realizar Devolución</button>
                 </div>
             </div>
         </div>
     </div>
 </div>
+
+<script>
+    document.addEventListener('DOMContentLoaded', (event) => {
+        fetch('http://localhost:8080/api/prestamo')
+            .then(response => response.json())
+            .then(data => {
+                const prestamosBody = document.getElementById('prestamos-body');
+                prestamosBody.innerHTML = ''; // Limpiar tabla antes de agregar nuevos datos
+                data.forEach(prestamo => {
+                    const row = document.createElement('tr');
+                    row.innerHTML = `
+                <td class="py-2 px-4 border-b">${prestamo.prestamo_id}</td>
+                <td class="py-2 px-4 border-b">${prestamo.libro.isbn}</td>
+                <td class="py-2 px-4 border-b">${prestamo.libro.titulo}</td>
+                <td class="py-2 px-4 border-b">${prestamo.libro.autor.nombre}</td>
+                <td class="py-2 px-4 border-b">${prestamo.fecha_prestamo}</td>
+                <td class="py-2 px-4 border-b">${prestamo.fecha_devolucion || 'Pendiente'}</td>
+                <td class="py-2 px-4 border-b">
+                    <button onclick="devolverLibro(${prestamo.prestamo_id})" class="bg-ocre text-white px-2 py-1 rounded hover:bg-ocre-dark">Devolver</button>
+                </td>
+            `;
+                    prestamosBody.appendChild(row);
+                });
+            })
+            .catch(error => {
+                console.error('Error:', error);
+            });
+    });
+
+    function realizarDevolucion() {
+        const prestamoId = document.getElementById('prestamo-id').value;
+
+        fetch(`http://localhost:8080/api/prestamo/devolver?prestamoId=${prestamoId}`, {
+            method: 'POST'
+        })
+            .then(response => {
+                if (response.ok) {
+                    alert('Libro devuelto exitosamente');
+                    location.reload(); // Recargar la página para actualizar la lista de préstamos
+                } else {
+                    alert('Error al devolver el libro');
+                }
+            })
+            .catch(error => {
+                console.error('Error:', error);
+            });
+    }
+
+    function devolverLibro(prestamoId) {
+        document.getElementById('prestamo-id').value = prestamoId;
+        realizarDevolucion();
+    }
+</script>
 </body>
 
 </html>
