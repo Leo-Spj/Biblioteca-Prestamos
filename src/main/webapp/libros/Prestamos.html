@@ -51,8 +51,8 @@
             <img src="https://i.postimg.cc/CxFmPffS/temp-Image-Tacv-RE.avif" alt="La Librería Logo" class="h-12 mb-4 sm:mb-0">
         </a>
         <div class="relative w-full sm:w-1/2 mt-2 sm:mt-0">
-            <input type="text" id="titulo-search" placeholder="Título" class="w-full border border-gray-300 rounded-full py-2 pl-4 pr-10 text-warmGray-800" onkeyup="filtrarPrestamos(event)">
-            <button class="absolute right-4 top-1/2 transform -translate-y-1/2 text-warmGray-800" onclick="filtrarPrestamos()">
+            <input type="text" id="titulo-search" placeholder="Título" class="w-full border border-gray-300 rounded-full py-2 pl-4 pr-10 text-warmGray-800" onkeyup="filtrarLibros(event)">
+            <button class="absolute right-4 top-1/2 transform -translate-y-1/2 text-warmGray-800" onclick="filtrarLibros()">
                 <i class="fas fa-search"></i>
             </button>
         </div>
@@ -86,7 +86,7 @@
     <div class="bg-white shadow-md rounded-lg p-6">
         <div class="flex justify-between mb-4">
             <div>
-                <h2 class="text-2xl font-bold">Préstamos</h2>
+                <h2 class="text-2xl font-bold">Libros</h2>
             </div>
             <div class="flex space-x-4">
                 <a href="devoluciones.html" class="bg-ocre text-white px-4 py-2 rounded hover:bg-ocre-dark">Devoluciones</a>
@@ -98,8 +98,8 @@
                 <div class="mb-4">
                     <label for="search" class="block text-gray-700">Libros</label>
                     <div class="flex">
-                        <input type="text" id="search" placeholder="Título" class="w-full border border-gray-300 rounded-l py-2 px-4" onkeyup="filtrarPrestamos(event)">
-                        <button class="bg-gray-300 border border-gray-300 rounded-r px-4 py-2" onclick="filtrarPrestamos()">
+                        <input type="text" id="search" placeholder="Título" class="w-full border border-gray-300 rounded-l py-2 px-4" onkeyup="filtrarLibros(event)">
+                        <button class="bg-gray-300 border border-gray-300 rounded-r px-4 py-2" onclick="filtrarLibros()">
                             <i class="fas fa-search"></i>
                         </button>
                     </div>
@@ -114,8 +114,8 @@
                         <th class="py-2 px-4 border-b">Stock</th>
                     </tr>
                     </thead>
-                    <tbody id="prestamos-body">
-                    <!-- Filas de préstamos se agregarán aquí -->
+                    <tbody id="libros-body">
+                    <!-- Filas de libros se agregarán aquí -->
                     </tbody>
                 </table>
             </div>
@@ -143,21 +143,21 @@
 
 <script>
     document.addEventListener('DOMContentLoaded', (event) => {
-        fetch('http://localhost:8080/api/prestamo')
+        fetch('http://localhost:8080/api/libro')
             .then(response => response.json())
             .then(data => {
-                const prestamosBody = document.getElementById('prestamos-body');
-                prestamosBody.innerHTML = ''; // Limpiar tabla antes de agregar nuevos datos
-                data.forEach(prestamo => {
+                const librosBody = document.getElementById('libros-body');
+                librosBody.innerHTML = ''; // Limpiar tabla antes de agregar nuevos datos
+                data.forEach(libro => {
                     const row = document.createElement('tr');
                     row.innerHTML = `
-                <td class="py-2 px-4 border-b">${prestamo.prestamo_id}</td>
-                <td class="py-2 px-4 border-b">${prestamo.libro.isbn}</td>
-                <td class="py-2 px-4 border-b">${prestamo.libro.titulo}</td>
-                <td class="py-2 px-4 border-b">${prestamo.libro.autor.nombre}</td>
-                <td class="py-2 px-4 border-b">${prestamo.libro.stock}</td>
+                <td class="py-2 px-4 border-b">${libro.libro_id}</td>
+                <td class="py-2 px-4 border-b">${libro.isbn}</td>
+                <td class="py-2 px-4 border-b">${libro.titulo}</td>
+                <td class="py-2 px-4 border-b">${libro.autor.nombre}</td>
+                <td class="py-2 px-4 border-b">${libro.stock}</td>
             `;
-                    prestamosBody.appendChild(row);
+                    librosBody.appendChild(row);
                 });
             })
             .catch(error => {
@@ -190,13 +190,13 @@
             });
     }
 
-    function filtrarPrestamos(event) {
+    function filtrarLibros(event) {
         if (event && event.type === 'keyup' && event.key !== 'Enter') {
             return;
         }
 
         const searchValue = document.getElementById('titulo-search').value.toLowerCase();
-        const rows = document.querySelectorAll('#prestamos-body tr');
+        const rows = document.querySelectorAll('#libros-body tr');
 
         rows.forEach(row => {
             const titleCell = row.querySelector('td:nth-child(3)').textContent.toLowerCase();
