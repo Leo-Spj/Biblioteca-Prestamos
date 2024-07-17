@@ -46,7 +46,7 @@
 <header class="bg-crema-claro py-2 shadow-sm">
     <div class="container mx-auto flex justify-between items-center px-6">
         <div class="flex space-x-4">
-            <a href="#" class="text-sm font-bold text-ocre-dark">Quiénes somos</a>
+            <a href="<c:url value='/' />" class="text-sm font-bold text-ocre-dark">Quiénes somos</a>
             <!--
              <a href="#" class="text-sm font-bold text-ocre-dark">WhatsApp</a>
              -->
