@@ -16,11 +16,13 @@
         <servlet-name>ListadoLibrosServlet</servlet-name>
         <servlet-class>com.utp.biblioteca.resources.controlador.servlets.ListadoLibrosServlet</servlet-class>
     </servlet>
+
     <servlet>
         <servlet-name>Faces Servlet</servlet-name>
         <servlet-class>jakarta.faces.webapp.FacesServlet</servlet-class>
         <load-on-startup>1</load-on-startup>
     </servlet>
+
     <servlet-mapping>
         <servlet-name>TopLibrosServlet</servlet-name>
         <url-pattern>/TopLibrosServlet</url-pattern>
@@ -29,6 +31,7 @@
         <servlet-name>ListadoLibrosServlet</servlet-name>
         <url-pattern>/ListadoLibrosServlet</url-pattern>
     </servlet-mapping>
+
     <servlet-mapping>
         <servlet-name>Faces Servlet</servlet-name>
         <url-pattern>/faces/*</url-pattern>
