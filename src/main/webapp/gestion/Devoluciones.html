@@ -16,12 +16,15 @@
         .bg-ocre {
             background-color: #cc9966; /* Color ocre */
         }
+
         .bg-ocre-dark {
             background-color: #8B4513; /* Ocre oscuro */
         }
+
         .text-ocre-dark {
             color: #8B4513;
         }
+
         .bg-crema-claro {
             background-color: #FFFDD0; /* Crema claro */
         }
@@ -83,24 +86,26 @@
     <div class="bg-white shadow-md rounded-lg p-6">
         <div class="flex justify-between mb-4">
             <div>
-                <h2 class="text-2xl font-bold">Devoluciones</h2>
+                <h2 class="text-2xl font-bold">Realizar devolución</h2>
             </div>
             <div class="flex space-x-4">
                 <a href="prestamos.html" class="bg-ocre text-white px-4 py-2 rounded hover:bg-ocre-dark">Préstamos</a>
                 <a href="http://localhost:8080/faces/usuarios/formularioUsuario.xhtml#" class="bg-ocre text-white px-4 py-2 rounded hover:bg-ocre-dark">Registrar Usuario</a>
             </div>
         </div>
+
         <div class="flex space-x-6">
-            <div class="w-2/3">
-                <div class="mb-4">
-                    <label for="search" class="block text-gray-700">Libros</label>
-                    <div class="flex">
-                        <input type="text" id="search" placeholder="Título" class="w-full border border-gray-300 rounded-l py-2 px-4">
-                        <button class="bg-gray-300 border border-gray-300 rounded-r px-4 py-2">
-                            <i class="fas fa-search"></i>
-                        </button>
-                    </div>
-                </div>
+            <label for="search" class="block text-gray-700">Ingrese el dni para búsqueda</label>
+            <div class="flex">
+                <input type="text" id="dni-search" placeholder="DNI" class="w-full border border-gray-300 rounded-l py-2 px-4" onkeyup="handleKeyUp(event)">
+                <button class="bg-gray-300 border border-gray-300 rounded-r px-4 py-2" onclick="buscarHistorial()">
+                    <i class="fas fa-search"></i>
+                </button>
+            </div>
+        </div>
+
+        <div class="mb-4">
+            <div class="mb-4">
                 <table class="min-w-full bg-white">
                     <thead>
                     <tr>
@@ -118,23 +123,21 @@
                     </tbody>
                 </table>
             </div>
-            <div class="w-1/3">
-                <div class="bg-gray-100 p-4 rounded">
-                    <h3 class="text-lg font-bold mb-2">Devolución</h3>
-                    <div class="mb-2">
-                        <label for="prestamo-id" class="block text-gray-700">ID Préstamo</label>
-                        <input type="text" id="prestamo-id" class="w-full border border-gray-300 rounded py-2 px-4">
-                    </div>
-                    <button onclick="realizarDevolucion()" class="bg-ocre text-white w-full py-2 rounded hover:bg-ocre-dark">Realizar Devolución</button>
-                </div>
-            </div>
         </div>
     </div>
 </div>
 
 <script>
-    document.addEventListener('DOMContentLoaded', (event) => {
-        fetch('http://localhost:8080/api/prestamo')
+    function handleKeyUp(event) {
+        if (event.key === 'Enter') {
+            buscarHistorial();
+        }
+    }
+
+    function buscarHistorial() {
+        const dni = document.getElementById('dni-search').value;
+
+        fetch(`http://localhost:8080/api/prestamo/historial/${dni}`)
             .then(response => response.json())
             .then(data => {
                 const prestamosBody = document.getElementById('prestamos-body');
@@ -142,34 +145,32 @@
                 data.forEach(prestamo => {
                     const row = document.createElement('tr');
                     row.innerHTML = `
-                <td class="py-2 px-4 border-b">${prestamo.prestamo_id}</td>
-                <td class="py-2 px-4 border-b">${prestamo.libro.isbn}</td>
-                <td class="py-2 px-4 border-b">${prestamo.libro.titulo}</td>
-                <td class="py-2 px-4 border-b">${prestamo.libro.autor.nombre}</td>
-                <td class="py-2 px-4 border-b">${prestamo.fecha_prestamo}</td>
-                <td class="py-2 px-4 border-b">${prestamo.fecha_devolucion || 'Pendiente'}</td>
-                <td class="py-2 px-4 border-b">
-                    <button onclick="devolverLibro(${prestamo.prestamo_id})" class="bg-ocre text-white px-2 py-1 rounded hover:bg-ocre-dark">Devolver</button>
-                </td>
-            `;
+                        <td class="py-2 px-4 border-b">${prestamo.prestamo_id}</td>
+                        <td class="py-2 px-4 border-b">${prestamo.libro.isbn}</td>
+                        <td class="py-2 px-4 border-b">${prestamo.libro.titulo}</td>
+                        <td class="py-2 px-4 border-b">${prestamo.libro.autor.nombre}</td>
+                        <td class="py-2 px-4 border-b">${prestamo.fecha_prestamo}</td>
+                        <td class="py-2 px-4 border-b">${prestamo.fecha_devolucion || 'Pendiente'}</td>
+                        <td class="py-2 px-4 border-b">
+                            <button onclick="devolverLibro(${prestamo.prestamo_id})" class="bg-ocre text-white px-2 py-1 rounded hover:bg-ocre-dark">Devolver</button>
+                        </td>
+                    `;
                     prestamosBody.appendChild(row);
                 });
             })
             .catch(error => {
                 console.error('Error:', error);
             });
-    });
+    }
 
-    function realizarDevolucion() {
-        const prestamoId = document.getElementById('prestamo-id').value;
-
+    function realizarDevolucion(prestamoId) {
         fetch(`http://localhost:8080/api/prestamo/devolver?prestamoId=${prestamoId}`, {
             method: 'POST'
         })
             .then(response => {
                 if (response.ok) {
                     alert('Libro devuelto exitosamente');
-                    location.reload(); // Recargar la página para actualizar la lista de préstamos
+                    buscarHistorial(); // Recargar los datos después de la devolución
                 } else {
                     alert('Error al devolver el libro');
                 }
@@ -180,8 +181,7 @@
     }
 
     function devolverLibro(prestamoId) {
-        document.getElementById('prestamo-id').value = prestamoId;
-        realizarDevolucion();
+        realizarDevolucion(prestamoId);
     }
 </script>
 </body>
