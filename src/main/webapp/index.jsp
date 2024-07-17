@@ -64,7 +64,6 @@
             <a href="<c:url value='/faces/usuarios/formularioUsuario.xhtml' />" class="text-sm">Registrar Usuario</a>
             <a href="<c:url value='/faces/libros/formularioLibro.xhtml' />" class="text-sm">Registrar Libro</a>
             <a href="<c:url value='/gestion/Devoluciones' />" class="text-sm">Devoluciones</a>
-            <a href="#" class="text-sm">Contáctanos</a>
         </div>
 
         <div class="flex space-x-4">
