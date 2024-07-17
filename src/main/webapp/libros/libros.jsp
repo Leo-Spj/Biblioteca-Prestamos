@@ -52,7 +52,7 @@
 </header>
 <div class="bg-white shadow py-4 w-full flex justify-center items-center">
     <div class="container flex flex-col justify-center items-center px-6">
-        <a href="#">
+        <a href="/">
             <img src="https://i.postimg.cc/CxFmPffS/temp-Image-Tacv-RE.avif" alt="La Librería Logo" class="h-12 mb-4 sm:mb-0" />
         </a>
     </div>
